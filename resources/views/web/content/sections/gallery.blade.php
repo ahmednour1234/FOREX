@@ -19,13 +19,13 @@
                         </div>
                     @endforeach
                 </div>
-{{-- زر السابق --}}
-<div class="swiper-button-prev">
-</div>
+<!--{{-- زر السابق --}}-->
+<!--<div class="swiper-button-prev">-->
+<!--</div>-->
 
-{{-- زر التالي --}}
-<div class="swiper-button-next">
-</div>
+<!--{{-- زر التالي --}}-->
+<!--<div class="swiper-button-next">-->
+<!--</div>-->
 
             </div>
         </div>
