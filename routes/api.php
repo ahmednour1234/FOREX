@@ -7,4 +7,4 @@ use Illuminate\Support\Facades\Route;
 // routes/api.php
 use App\Http\Controllers\API\LeadFormController;
 
-Route::post('/lead-form', [LeadFormController::class, 'store']);
+Route::match(['get', 'post'], '/lead-form', [LeadFormController::class, 'handle']);

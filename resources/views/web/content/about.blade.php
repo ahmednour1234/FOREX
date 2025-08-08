@@ -61,24 +61,26 @@
             /* المسافة بين الشعارات */
             align-items: center;
             justify-content: center;
+            margin-top: 40px;
         }
 
         .sponsor-item {
             flex: 0 0 auto;
-            width: 160px;
-            height: 100px;
+            width: 190px;
+            height: 190px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(255, 255, 255, 0.1);
+            background: linear-gradient(to right, #000000, #5b090973);
             border-radius: 12px;
             padding: 10px;
         }
 
         .sponsor-item img {
             max-width: 100%;
-            max-height: 80px;
+            max-height: 90%;
             object-fit: contain;
+            border-radius: 10px;
         }
 
         @keyframes sponsor-scroll {
@@ -152,6 +154,7 @@
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
+
 @media (max-width: 767px) {
   .speaker-card {
     display: none;
@@ -161,44 +164,7 @@
     display: block;
   }
 }
-.custom-swiper-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 34px;
-  height: 34px;
-  background-color: rgba(0, 0, 0, 0.6);
-  border-radius: 50%;
-  z-index: 10;
-  color: #fff;
-}
 
-.swiper-button-prev.custom-swiper-btn {
-  left: -15px; /* ← أو 0px لو حابب يكون ملتصق بالحافة */
-}
-
-.swiper-button-next.custom-swiper-btn {
-  right: -15px;
-}
-
-.swiper-button-next::after,
-.swiper-button-prev::after {
-  font-size: 16px;
-}
-.swiper-button-next.custom-swiper-btn {
-    right: -35px;
-}
-.custom-swiper-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 34px;
-    height: 34px;
-    background-color: rgba(0, 0, 0, 0);
-    border-radius: 50%;
-    z-index: 10;
-    color: #fff;
-}
 @media (max-width: 768px) {
   .custom-swiper-btn {
     width: 28px;
@@ -264,7 +230,7 @@
 <section class="breadcrumbs-custom bg-image context-dark"
          style="background-image: url({{ asset('web/assets/images/bg-breadcrumbs-01-1894x424.jpg') }});">
     <div class="container">
-        
+
         <h3 class="breadcrumbs-custom-title">About</h3>
     </div>
 </section>
@@ -386,7 +352,7 @@
                         <span class="button-overlay"></span>
                     </a>
                 </div>
-                
+
             </div>
         </section>
     @endif
@@ -559,52 +525,67 @@
         <h6 class="text-center" style="color:#E73701;">{{ $gallery_section->title[$locale] ?? '' }}</h6>
         <h3 class="text-center " style="color:black;">{{ $gallery_section->description[$locale] ?? '' }}</h3>
 
-        {{-- نسخة الديسكتوب: Slider --}}
-<div class="position-relative d-none d-md-block">
-            <div class="swiper gallerySwiper mb-5 mt-5 pb-5 pt-5">
-                <div class="swiper-wrapper">
-                    @foreach ($gallieries as $gallery)
-                        <div class="swiper-slide">
-                            <a href="{{ asset($gallery->image) }}" data-lightgallery="item">
-                                <img src="{{ asset($gallery->image) }}" class="img-fluid rounded shadow" alt="gallery">
-                            </a>
-                        </div>
-                    @endforeach
+                    {{-- Slider لجميع الشاشات --}}
+            <div class="position-relative">
+                <div class="swiper gallerySwiper pb-5 pt-5">
+                    <div class="swiper-wrapper">
+                        @foreach ($gallieries as $gallery)
+                            <div class="swiper-slide">
+                                <a href="{{ asset($gallery->image) }}" data-lightgallery="item">
+                                    <img src="{{ asset($gallery->image) }}" alt="gallery">
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    {{-- أزرار التنقل --}}
+                    <div class="swiper-button-prev custom-swiper-btn"></div>
+                    <div class="swiper-button-next custom-swiper-btn"></div>
                 </div>
-{{-- زر السابق --}}
-<div class="swiper-button-prev">
-    <img src="{{ asset('web/assets/images/arrow left-01.svg') }}" alt="Prev"  width="20" height="20">
-</div>
-
-{{-- زر التالي --}}
-<div class="swiper-button-next">
-    <img src="{{ asset('web/assets/images/arrow-01.svg') }}"  alt="Next" width="20" height="20">
-</div>
-
             </div>
-        </div>
 
-        {{-- نسخة الموبايل: Grid --}}
-        <div class="gallery-grid-mobile d-md-none">
-            @foreach ($gallieries as $gallery)
-                <a href="{{ asset($gallery->image) }}" data-lightgallery="item" class="gallery-item">
-                    <img src="{{ asset($gallery->image) }}" alt="gallery">
+            {{-- زر عرض الكل --}}
+            <div class="text-center">
+                <a class="button button-secondary box-with-triangle-right wow fadeScale mt-2"
+                   href="{{ route('web.gallery') }}" data-triangle=".button-overlay">
+                    <span>More Gallery</span>
+                    <span class="button-overlay"></span>
                 </a>
-            @endforeach
-        </div>
+            </div>
 
-        {{-- زر عرض الكل --}}
-        <div class="text-center">
-            <a class="button button-secondary box-with-triangle-right wow fadeScale mt-2"
-               href="{{ route('web.gallery') }}" data-triangle=".button-overlay">
-                <span>{{ __('home.Gallery') }}</span>
-                <span class="button-overlay"></span>
-            </a>
-        </div>
     </div>
-        </div>
 
 </section>
+
+{{-- Swiper CSS & JS --}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
+{{-- Swiper init --}}
+<script>
+    const swiper = new Swiper('.gallerySwiper', {
+        loop: true,
+        spaceBetween: 24,
+        effect: 'slide', // ممكن تغيّره لـ "fade" لو تحب
+        speed: 800,
+        grabCursor: true,
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+          breakpoints: {
+            0: {
+              slidesPerView: 1,
+              },
+          768: {
+              slidesPerView: 2,
+          },
+          1024: {
+              slidesPerView: 4,
+          },
+          },
+    });
+</script>
 @endif
 
 

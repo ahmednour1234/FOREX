@@ -1288,5 +1288,17 @@
   "pdfs.delete": "Delete",
   "pdfs.confirm_delete": "Are you sure you want to delete this PDF?",
   "pdfs.activate": "Activate",
-  "pdfs.deactivate": "Deactivate"
+  "pdfs.deactivate": "Deactivate",
+   "luxury_community.title": "Luxury FX Community Members",
+  "luxury_community.create": "Add Member",
+  "luxury_community.name": "Name",
+  "luxury_community.title_col": "Title",
+  "luxury_community.company": "Company",
+  "luxury_community.email": "Email",
+  "luxury_community.phone": "Phone",
+  "luxury_community.image": "Image",
+  "luxury_community.actions": "Actions",
+  "luxury_community.edit": "Edit",
+  "luxury_community.delete": "Delete",
+  "luxury_community.confirm_delete": "Are you sure you want to delete?"
 }

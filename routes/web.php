@@ -28,6 +28,7 @@ use App\Http\Controllers\dashboard\LeadController;
 use App\Models\Client;
 use App\Models\Event;
 use App\Models\HomeSection;
+use App\Http\Controllers\API\LeadFormController;
 
 Route::middleware('auth')
   ->get('/dashboard', [Analytics::class, 'index'])
@@ -320,3 +321,5 @@ Route::prefix('dashboard')->middleware(['auth'])->name('dashboard.')->group(func
 });
 
 Route::post('/video-upload-chunk', [HomeSectionController::class, 'uploadChunk'])->name('video.upload.chunk');
+
+
