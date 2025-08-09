@@ -31,6 +31,7 @@ class PrizeController extends Controller
                         'description_ar'=>'nullable',
             'img' => 'nullable',
             'active' => 'nullable|boolean',
+            'order'=>'nullable'
         ]);
 
         if ($request->hasFile('img')) {
@@ -60,6 +61,8 @@ class PrizeController extends Controller
                         'description_ar'=>'nullable',
             'img' => 'nullable',
             'active' => 'nullable|boolean',
+                        'order'=>'nullable'
+
         ]);
 
         if ($request->hasFile('img')) {
@@ -76,4 +79,5 @@ class PrizeController extends Controller
         $prize->delete();
         return redirect()->route('dashboard.prizes.index')->with('success', 'Prize deleted.');
     }
+
 }

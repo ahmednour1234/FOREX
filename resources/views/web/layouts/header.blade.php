@@ -4,205 +4,244 @@
 @endphp
 
 <style>
-    /* الهيدر الأساسي شفاف */
+    :root {
+        --gold: #D4AF37;
+        --dark-gold: #B8860B;
+        --black: #0A0A0A;
+        --dark-gray: #1A1A1A;
+        --medium-gray: #2A2A2A;
+    }
+
+    /* Header Base Styles */
     .main-header {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        background: transparent;
-        z-index: 1000;
-    }
-
-    .main-header .main-menu__wrapper {
-        background: transparent !important;
-        padding-top: 10px;
-        padding-bottom: 10px;
-    }
-
-    .main-menu__logo img,
-    .main-menu__left .logo img {
-        max-height: 100px;
-        height: auto;
-        width: auto;
-        object-fit: contain;
-    }
-
-    .xs-sidebar-group .logo img {
-        max-height: 150px !important;
-        height: auto;
-        width: auto;
-        object-fit: contain;
-    }
-
-    /* Sticky header عند التمرير */
-    .stricked-menu.stricky-fixed {
-        background-color: #000 !important;
         position: fixed;
         top: 0;
         left: 0;
-        right: 0;
         width: 100%;
-        z-index: 9999;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        transition: all 0.3s ease;
+        background: var(--black);
+        z-index: 1000;
+        padding: 15px 40px 15px 100px;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        height: 110px;
+
     }
 
-    .stricked-menu .main-menu__wrapper-inner {
-        padding-top: 10px;
-        padding-bottom: 10px;
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 auto;
+        padding: 0 20px;
+        height: 100%;
     }
-    /* شكل الهيدر عند التمرير */
-header.main-header.is-sticky {
-    position: fixed !important;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #000 !important;
-    z-index: 9999;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-}
-@media (min-width: 992px) {
-    .main-menu__left {
-        padding-left: 90px;
-    }
-}
 
-@media (min-width: 992px) and (max-width: 1199.98px) {
-    .laptop-padding {
-        padding-left: 90px;
+    .logo img {
+        height: 85px;
     }
-  
-        .main-menu__wrapper-inner {
-        padding: 0 90px;
-    }
-}
 
-@media (min-width: 1200px) and (max-width: 1319px) {
-    .main-menu__wrapper-inner {
-        padding: 0 70px;
+    /* Navigation */
+    .main-nav {
+        display: flex;
+        align-items: center;
+        gap: 25px;
     }
-}
+
+    .nav-links {
+        display: flex;
+        gap: 20px;
+    }
+
+    .nav-links a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+        position: relative;
+        font-size: 19px;
+    }
+
+    .nav-links a:hover {
+        color: var(--gold);
+    }
+
+    .nav-links a::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--gold);
+        transition: width 0.3s;
+    }
+
+    .nav-links a:hover::after {
+        width: 100%;
+    }
+
+    .thm-btn {
+      text-decoration: none;
+    }
+
+    /* Mobile Menu */
+    .mobile-menu-btn {
+        display: none;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    /* Sidebar */
+    .sidebar {
+        position: fixed;
+        bottom: 0;
+        left: -300px;
+        width: 300px;
+        height: calc(100% - 110px);
+        background: var(--dark-gray);
+        z-index: 1100;
+        transition: left 0.3s;
+        padding: 30px;
+        overflow-y: auto;
+        height: 100vh;
+    }
+
+    .sidebar img {
+      height: 80px !important;
+      width: 100px;
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 1099;
+        display: none;
+    }
+
+    .sidebar-overlay.active {
+        display: block;
+    }
+
+    .sidebar-links {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 40px;
+    }
+
+    .sidebar-links a {
+        color: white;
+        text-decoration: none;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--medium-gray);
+        transition: all 0.3s;
+    }
+
+    .sidebar-links a:hover {
+        color: var(--gold);
+        padding-left: 10px;
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .nav-links {
+          display: none;
+      }
+
+      .mobile-menu-btn {
+          display: block;
+      }
+
+      .main-header {
+          padding: 15px 0;
+      }
+
+      .main-header .thm-btn {
+          display: none;
+      }
+    }
 </style>
 
-
-<!-- ✅ JavaScript لتفعيل sticky header -->
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const stickyHeader = document.querySelector(".stricked-menu");
-        const triggerHeight = 100;
-
-        window.addEventListener("scroll", function () {
-            if (window.scrollY > triggerHeight) {
-                stickyHeader.classList.add("stricky-fixed");
-            } else {
-                stickyHeader.classList.remove("stricky-fixed");
-            }
-        });
-    });
-</script>
-
-<!-- ✅ سايدبار للموبايل -->
-<div class="xs-sidebar-group info-group info-sidebar">
-    <div class="xs-overlay xs-bg-black"></div>
-    <div class="xs-sidebar-widget">
-        <div class="sidebar-widget-container">
-            <div class="widget-heading">
-                <a href="#" class="close-side-widget">×</a>
-            </div>
-
-            <div class="sidebar-textwidget">
-                <div class="sidebar-info-contents">
-                    <div class="content-inner">
-                        <div class="logo mb-4 text-center">
-                            <a href="{{ route('web.home') }}">
-                                <img src="{{ asset($setting->img) }}"
-                                     alt="Logo"
-                                     style="max-height: 60px; height: auto; width: auto; object-fit: contain; display: block; margin: 0 auto;">
-                            </a>
-                        </div>
-
-                        <div class="content-box text-center">
-                            <h4>{{ __('About Us') }}</h4>
-                            <p>{{ $setting->about_us ?? __('We are a leading company specializing in...') }}</p>
-                        </div>
-
-                        <div class="form-inner mt-5">
-                            <h4 class="text-center">{{ __('Get a Free Quote') }}</h4>
-
-                            <form action="{{ route('web.contact') }}" method="POST" class="contact-form-validated">
-                                @csrf
-                                <div class="form-group">
-                                    <input type="text" name="name" placeholder="{{ __('Name') }}" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="email" name="email" placeholder="{{ __('Email') }}" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <textarea name="message" placeholder="{{ __('Message...') }}" class="form-control" rows="4" required></textarea>
-                                </div>
-                                <div class="form-group message-btn text-center">
-                                    <button type="submit" class="thm-btn form-inner__btn">{{ __('Submit Now') }}</button>
-                                </div>
-                            </form>
-                            <div class="result mt-2 text-center"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+<!-- Header Markup -->
+<header class="main-header">
+    <div class="header-container">
+        <div class="logo">
+            <a href="{{ route('web.home') }}">
+                <img src="{{ asset($setting->img) }}" alt="Logo">
+            </a>
         </div>
+
+        <nav class="main-nav">
+            <div class="nav-links">
+                <a href="{{ route('web.home') }}">Home</a>
+                <a href="{{ route('web.about') }}">About</a>
+                <a href="{{ route('web.packages') }}">Packages</a>
+                <a href="{{ route('web.voting') }}">Voting</a>
+                <a href="{{ route('web.prizes') }}">Prizes</a>
+                <a href="{{ route('web.contact') }}">Contact</a>
+                <a href="{{ route('web.multi_media') }}">Media</a>
+                <a href="{{ route('web.luxury') }}">Luxury</a>
+            </div>
+
+            <a href="{{route('web.becomesponsor')}}" class="buy-ticket__btn-1 thm-btn">
+                Become Sponsor
+                <span class="icon-arrow-right"></span>
+            </a>
+
+            <button class="mobile-menu-btn" onclick="openSidebar()">
+                <i class="fa fa-bars"></i>
+            </button>
+        </nav>
     </div>
-</div>
-
-<!-- ✅ الهيدر الرئيسي -->
-<header class="main-header main-header-three">
-    <nav class="main-menu main-menu-three">
-        <div class="main-menu__wrapper">
-            <div class="main-menu__wrapper-inner">
-                <div class="main-menu__left">
-                    <div class="logo">
-                        <a href="{{ route('web.home') }}">
-                            <img src="{{ asset($setting->img) }}" alt="Logo">
-                        </a>
-                    </div>
-                </div>
-                <div class="main-menu__right" >
-                    <div class="main-menu__main-menu-box">
-                        <a href="#" class="mobile-nav__toggler"><i class="fa fa-bars"></i></a>
-                        <ul class="main-menu__list">
-                            <li><a href="{{ route('web.home') }}" style="text-decoration:none;">Home</a></li>
-                            <li><a href="{{ route('web.about') }}" style="text-decoration:none;">About</a></li>
-                            <li><a href="{{ route('web.packages') }}" style="text-decoration:none;">Packages</a></li>
-                            <li><a href="{{ route('web.voting') }}" style="text-decoration:none;">Voting</a></li>
-                            <li><a href="{{ route('web.prizes') }}" style="text-decoration:none;">Prizes</a></li>
-                            <li><a href="{{ route('web.contact') }}" style="text-decoration:none;">Contact</a></li>
-                            <li class="dropdown">
-                                <a href="#" style="text-decoration:none;">More</a>
-                                <ul>
-                                    <li><a href="{{ route('web.multi_media') }}" style="text-decoration:none;">Multi Media</a></li>
-                                    <li><a href="{{ route('web.luxury') }}" style="text-decoration:none;">Luxury FX Community</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="main-menu__btn-box">
-                        <a href="{{ route('web.becomesponsor') }}" class="main-menu__btn thm-btn" style="text-decoration:none;">
-                            Become Sponsor <span class="icon-arrow-right"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
 </header>
 
-<!-- ✅ الهيدر البديل (يظهر عند التمرير) -->
-<div class="stricky-header stricked-menu main-menu main-menu-three">
-    <div class="sticky-header__content">
-        {{-- يتم نسخه تلقائيًا عبر JavaScript أو عبر CSS من الهيدر الأصلي --}}
+<!-- Sidebar -->
+<div class="sidebar-overlay" onclick="closeSidebar()"></div>
+<div class="sidebar" id="sidebar">
+    <div class="logo" style="margin-bottom: 30px;">
+        <a href="{{ route('web.home') }}">
+            <img src="{{ asset($setting->img) }}" alt="Logo" style="height: 35px;">
+        </a>
+    </div>
+
+    <div class="sidebar-links">
+        <a href="{{ route('web.home') }}">Home</a>
+        <a href="{{ route('web.about') }}">About</a>
+        <a href="{{ route('web.packages') }}">Packages</a>
+        <a href="{{ route('web.voting') }}">Voting</a>
+        <a href="{{ route('web.prizes') }}">Prizes</a>
+        <a href="{{ route('web.contact') }}">Contact</a>
+        <a href="{{ route('web.multi_media') }}">Media</a>
+        <a href="{{ route('web.luxury') }}">Luxury</a>
+        <a href="{{ route('web.becomesponsor') }}" style="color: var(--gold); font-weight: 600;">
+          Become Sponsor
+        </a>
     </div>
 </div>
 
+<script>
+    function openSidebar() {
+        document.getElementById('sidebar').classList.add('open');
+        document.querySelector('.sidebar-overlay').classList.add('active');
+    }
 
+    function closeSidebar() {
+        document.getElementById('sidebar').classList.remove('open');
+        document.querySelector('.sidebar-overlay').classList.remove('active');
+    }
+
+    // Close sidebar when clicking on links
+    document.querySelectorAll('.sidebar-links a').forEach(link => {
+        link.addEventListener('click', closeSidebar);
+    });
+</script>

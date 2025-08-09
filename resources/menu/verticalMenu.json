@@ -61,12 +61,7 @@
       "icon": "menu-icon tf-icons ti ti-smart-home",
       "slug": "Contact US"
     },
-    {
-      "url": "dashboard/ads",
-      "name": "Ads",
-      "icon": "menu-icon tf-icons ti ti-smart-home",
-      "slug": "Ads"
-    },
+
     {
       "url": "dashboard/galleries",
       "name": "Galleries",

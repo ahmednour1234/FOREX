@@ -4,201 +4,261 @@
 @php
     $locale = app()->getLocale();
 @endphp
+
+<!-- Modern Multimedia Section with Elegant Design -->
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
-
-    .prize-row {
-        row-gap: 60px;
+    /* ====== Global Variables ====== */
+    :root {
+        --primary-gradient: linear-gradient(135deg, #FFE986 0%, #C48127 100%);
+        --text-dark: #2D3748;
+        --text-light: #EDF2F7;
+        --card-bg: #FFFFFF;
+        --section-spacing: 140px 0 80px;
+        --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
-    .prize-card {
-        transition: transform 0.3s ease;
+    /* ====== Section Container ====== */
+    .multimedia-section {
+        padding: var(--section-spacing);
+        background-color: transparent;
+        position: relative;
+        min-height: calc(100vh - 110px);
     }
 
-    .prize-card:hover {
-        transform: translateY(-5px);
+    /* ====== Animated Header ====== */
+    .section-header {
+        text-align: center;
+        margin-bottom: 80px;
+        position: relative;
+        padding: 70px 0 0;
     }
 
-    .buy-ticket__img {
-        width: 100%;
-        height: 400px;
-        border-radius: 12px;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    .section-header::after {
+        content: '';
+        position: absolute;
+        bottom: -20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 4px;
+        background: var(--primary-gradient);
+        border-radius: 2px;
     }
 
-    .buy-ticket__img img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        display: block;
-    }
-
-    .buy-ticket__title {
-        font-size: 28px;
-        font-weight: bold;
-        margin-bottom: 15px;
-        background: linear-gradient(90deg, #FFE986, #C48127);
+    .typewriter-title {
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        font-weight: 700;
+        background: var(--primary-gradient);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        background-clip: text;
-        color: transparent;
-        font-family: 'Montserrat', sans-serif;
-    }
-
-    .buy-ticket__text {
-        font-size: 17px;
-        line-height: 1.8;
-        color: #e2e2e2;
-        word-break: break-word;
-    }
-
-    /* Typewriter Title */
-    .typewriter h2 {
         display: inline-block;
+        position: relative;
+        letter-spacing: 1px;
+    }
+
+    /* ====== Card Grid Layout ====== */
+    .card-grid {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+        padding: 0 20px;
+    }
+
+    /* ====== Individual Media Card ====== */
+    .media-card {
+        background: var(--card-bg);
+        border-radius: 12px;
         overflow: hidden;
-        white-space: nowrap;
-        border-right: 3px solid #FFE986;
-        animation: blink-caret 0.75s step-end infinite;
-        font-family: 'Montserrat', sans-serif;
-        font-size: 50px;
-background: linear-gradient(90deg, #FFE986 0%, #C48127 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        transition: var(--transition);
+        position: relative;
+        z-index: 1;
     }
 
-    .typewriter h2.finished {
-        border-right: none;
-        animation: none;
+    .media-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--primary-gradient);
+        opacity: 0;
+        transition: var(--transition);
+        z-index: -1;
     }
 
-    @keyframes blink-caret {
-        0%, 100% { border-color: transparent; }
-        50% { border-color: #FFE986; }
+    .media-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
     }
 
-    @media (max-width: 767.98px) {
-        .buy-ticket__img {
-            height: 240px;
-        }
-
-        .buy-ticket__title {
-            font-size: 22px;
-        }
-
-        .buy-ticket__text {
-            font-size: 14px;
-        }
-
-        .typewriter h2 {
-            font-size: 32px;
-        }
+    .media-card:hover::before {
+        opacity: 0.1;
     }
-</style>
 
-<!-- Breadcrumbs -->
-
-<!-- Page Header -->
-<section class="page-header">
-    <div class="container">
-        <div class="page-header__inner text-center typewriter">
-            <h2 id="typed-title"></h2>
-        </div>
-    </div>
-</section>
-<!-- Multi Media Categories -->
-<section class="section section-lg  text-center pt-5 mt-5 pb-5">
-    <div class="container">
-        <div class="row row-30 justify-content-center">
-
-            @foreach($multi_media_categories as $category)
-                <div class="col-md-6 col-lg-4">
-                    <div class="card multimedia-card shadow-sm rounded-4 overflow-hidden border border-2 border-primary-subtle h-100">
-                        <!-- Image Frame -->
-                        <div class="image-container-short border-bottom">
-                            <img src="{{ asset($category->logo) }}"
-                                 alt="logo"
-                                 class="img-fluid w-100 h-100 object-fit-cover">
-                        </div>
-
-                        <!-- Content -->
-                        <div class="card-body px-4 py-3 text-start">
-                          <a href="{{ route('web.multi_media.show',[$category->id]) }}">
-                           <h5 class="fw-bold text-center mb-2"
-    style="background: linear-gradient(90deg, #FFE986 0%, #C48127 100%);
-           -webkit-background-clip: text;
-           -webkit-text-fill-color: transparent;
-           background-clip: text;
-           text-fill-color: transparent;">
-    {{ $category->{'name_' . $locale} ?? '' }}
-</h5>
-
-                          </a>
-                            <p class="text-muted small text-wrap mb-0">
-                                {{ $category->{'description_' . $locale} ?? '' }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-
-            @if($multi_media_categories->isEmpty())
-                <div class="col-12">
-                    <p class="text-muted">{{ __('No multimedia categories available.') }}</p>
-                </div>
-            @endif
-
-        </div>
-    </div>
-</section>
-<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        AOS.init({ duration: 1000, once: true });
-
-        const text = @json(__('Multi Media'));
-        const target = document.getElementById("typed-title");
-        let index = 0;
-
-        function typeWriter() {
-            if (index < text.length) {
-                target.innerHTML += text.charAt(index);
-                index++;
-                setTimeout(typeWriter, 120);
-            } else {
-                target.classList.add('finished');
-            }
-        }
-
-        typeWriter();
-    });
-</script>
-<!-- Styles -->
-<style>
-    .image-container-short {
-        height: 180px;
+    /* ====== Card Image ====== */
+    .card-media {
+        height: 220px;
         overflow: hidden;
-        background-color: #f8f9fa;
+        position: relative;
     }
 
-    .image-container-short img {
+    .card-media img {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        transition: transform 0.6s ease;
     }
 
-    .multimedia-card {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        background-color: #fff;
+    .media-card:hover .card-media img {
+        transform: scale(1.08);
     }
 
-    .multimedia-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-        border-color: #0d6efd;
+    /* ====== Card Content ====== */
+    .card-body {
+        padding: 25px;
+        position: relative;
+        text-align: center;
+    }
+
+    .card-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+        color: var(--text-dark);
+        text-align: center;
+        transition: var(--transition);
+    }
+
+    .media-card:hover .card-title {
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .card-description {
+        color: #718096;
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: 20px;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    /* ====== Empty State ====== */
+    .empty-state {
+        grid-column: 1/-1;
+        text-align: center;
+        padding: 60px 20px;
+    }
+
+    .empty-icon {
+        font-size: 3.5rem;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 20px;
+    }
+
+    /* ====== Responsive Adjustments ====== */
+    @media (max-width: 992px) {
+        .card-grid {
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        }
+    }
+
+    @media (max-width: 768px) {
+        .multimedia-section {
+            padding: 100px 0 60px;
+        }
+
+        .card-media {
+            height: 200px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .card-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .typewriter-title {
+            font-size: 2.2rem;
+        }
     }
 </style>
+
+<!-- Main Section Start -->
+<section class="multimedia-section">
+    <div class="container">
+        <!-- Section Header with Typewriter Effect -->
+        <div class="section-header">
+            <h2 class="typewriter-title" id="typed-title"></h2>
+        </div>
+
+        <!-- Media Cards Grid -->
+        <div class="card-grid">
+            @foreach($multi_media_categories as $category)
+            <div class="media-card">
+                <!-- Card Media -->
+                <div class="card-media">
+                    <img src="{{ asset($category->logo) }}"
+                         alt="{{ $category->{'name_' . $locale} }}"
+                         loading="lazy">
+                </div>
+
+                <!-- Card Content -->
+                <div class="card-body">
+                    <a href="{{ route('web.multi_media.show',[$category->id]) }}" class="card-title">
+                        {{ $category->{'name_' . $locale} ?? '' }}
+                    </a>
+
+                    <a href="{{ route('web.multi_media.show',[$category->id]) }}" class="card-description">
+                        {{ $category->{'description_' . $locale} ?? '' }}
+                    </a>
+                </div>
+            </div>
+            @endforeach
+
+            <!-- Empty State -->
+            @if($multi_media_categories->isEmpty())
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <i class="fas fa-film"></i>
+                </div>
+                <h3>{{ __('No multimedia categories available') }}</h3>
+                <p>{{ __('Check back later for new content') }}</p>
+            </div>
+            @endif
+        </div>
+    </div>
+</section>
+<!-- Main Section End -->
+
+<!-- Typewriter Animation Script -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Configuration
+        const typingSpeed = 120; // milliseconds per character
+        const targetElement = document.getElementById("typed-title");
+        const titleText = @json(__('Multi Media'));
+
+        // Typewriter Effect Implementation
+        let charIndex = 0;
+
+        function typeCharacter() {
+            if (charIndex < titleText.length) {
+                targetElement.textContent += titleText.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeCharacter, typingSpeed);
+            }
+        }
+
+        // Initialize the effect
+        typeCharacter();
+    });
+</script>
 @endsection

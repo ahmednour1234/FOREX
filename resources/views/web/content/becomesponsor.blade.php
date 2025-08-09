@@ -2,260 +2,278 @@
 
 @section('content')
 <style>
-    .form-section {
-        padding: 0px 0;
-        background: black;
+    /* ====== Color Variables ====== */
+    :root {
+        --primary-gradient: linear-gradient(135deg, #E73701 0%, #000000 100%);
+        --gold-gradient: linear-gradient(90deg, #FFE986 0%, #C48127 100%);
+        --dark-bg: #0A0A0A;
+        --input-bg: #1A1A1A;
+        --text-light: #F5F5F5;
+        --accent-color: #FFE986;
     }
 
-    .form-title {
-        font-weight: bold;
-        margin-bottom: 30px;
-        font-size: 26px;
-        text-align: center;
-        background: linear-gradient(to right, #E73701, #000000);
+    body {
+        background: radial-gradient(circle at 70% 30%, #e798011a 0%, transparent 50%);
+    }
+
+    /* ====== Section Styling ====== */
+    .sponsor-section {
+        position: relative;
+        min-height: calc(100vh - 110px);
+    }
+
+    /* ====== Header ====== */
+    .page-header {
+        background: transparent;
+    }
+
+    .section-title {
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        font-weight: 800;
+        background: var(--gold-gradient);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        text-align: center;
+        font-family: 'Montserrat', sans-serif;
+        letter-spacing: 1px;
+        text-transform: uppercase;
     }
 
-    .form-wrap {
+    /* ====== Form Container ====== */
+    .form-container {
+        background: rgba(26, 26, 26, 0.8);
+        backdrop-filter: blur(10px);
+        border-radius: 24px;
+        padding: 40px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 233, 134, 0.1);
+    }
+
+    /* ====== Form Elements ====== */
+    .form-group {
+        margin-bottom: 25px;
         position: relative;
-        margin-bottom: 20px;
     }
 
     .form-label {
         position: absolute;
         top: 12px;
-        left: 20px;
-        font-size: 13px;
-        font-weight: bold;
-        color: #888;
-        pointer-events: none;
-        transition: all 0.2s ease-in-out;
-    }
-
-    .form-input,
-    .form-select {
-        padding: 22px 20px 10px;
-        border: 1px solid #FFE986;
-        border-radius: 50px;
+        left: 24px;
         font-size: 14px;
-        font-weight: bold;
-        background-color: white;
-        color: black;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.6);
+        pointer-events: none;
+        transition: all 0.3s ease;
+        transform-origin: left center;
+    }
+
+    .form-input {
         width: 100%;
-        height: 80px;
-        box-sizing: border-box;
-        outline: none;
-    }
-
-    .btn-square {
-        padding: 14px 60px;
+        padding: 28px 24px 12px;
+        background: var(--input-bg);
+        border: 1px solid rgba(255, 233, 134, 0.3);
+        border-radius: 12px;
         font-size: 16px;
-        font-weight: bold;
-        color: #fff;
-        border-radius: 50px;
-        cursor: pointer;
-        border: none;
-        background-color: #FFE986 ;
+        color: var(--text-light);
+        transition: all 0.3s ease;
+        height: 64px;
     }
 
-    .alert-danger {
-        font-size: 13px;
-        border-radius: 6px;
-        padding: 10px;
-        background-color: #ff4444;
-        color: #fff;
+    .form-input:focus {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 3px rgba(255, 233, 134, 0.2);
     }
 
-    .phone-flex {
+    .form-input:focus + .form-label,
+    .form-input:not(:placeholder-shown) + .form-label {
+        transform: translateY(-10px) scale(0.85);
+        color: var(--accent-color);
+    }
+
+    /* ====== Phone Input Group ====== */
+    .phone-group {
         display: flex;
-        gap: 10px;
-        align-items: center;
+        gap: 12px;
+    }
+    .phone-group .phone-input {
+        flex-grow: 1;
     }
 
-    .phone-flex .code-select {
-        flex: 1;
-        height: 60px;
-        border-radius: 50px;
-        background-color: #fff;
-        color: black;
-        border: 1px solid #FFE986;
-        font-weight: bold;
-        text-align: center;
+    .country-code {
+        flex: 0 0 120px;
+        position: relative;
     }
 
-    .phone-flex .phone-input {
-        flex: 3;
-        height: 60px;
-        padding: 12px 20px;
-        border: 1px solid #FFE986 ;
-        border-radius: 50px;
-        background-color: #fff;
-        color: black;
-        font-weight: bold;
+  .country-select {
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--input-bg);
+    border: 1px solid rgba(255, 233, 134, 0.3);
+    border-radius: 12px;
+    font-size: 16px;
+    color: var(--text-light);
+    appearance: none;
+    cursor: pointer;
+    height: 64px;
+    display: flex;
+    align-items: center;
     }
 
-    @media (max-width: 767px) {
-        .phone-flex {
-            flex-direction: column;
-        }
-
-        .phone-flex .code-select,
-        .phone-flex .phone-input {
-            width: 100%;
-        }
+    /* ====== Submit Button ====== */
+    .submit-btn {
+        width: 100%;
+        padding: 18px;
+        background: var(--gold-gradient);
+        color: #1A1A1A;
+        border: none;
+        border-radius: 12px;
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 10px;
     }
-      .pe-4 {
-    padding-right: 7rem !important;
-}
-   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
 
-        .page-header__inner {
-            text-align: center;
-            padding: 60px 0;
+    .submit-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(255, 233, 134, 0.3);
+    }
+
+    /* ====== Error Styling ====== */
+    .alert-danger {
+        background: rgba(255, 68, 68, 0.2);
+        border: 1px solid rgba(255, 68, 68, 0.5);
+        color: #FF4444;
+        padding: 16px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+        backdrop-filter: blur(5px);
+    }
+
+    /* ====== Responsive Adjustments ====== */
+    @media (max-width: 768px) {
+        .form-container {
+            padding: 30px 20px;
         }
 
-  #typed-title {
-    display: inline-block;
-    overflow: hidden;
-    white-space: nowrap;
-    border-right: 3px solid #FFE986;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 60px;
-
-    background: linear-gradient(90deg, #FFE986 0%, #C48127 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent;
-
-    animation: blink-caret 0.75s step-end infinite;
-}
-
-
-        #typed-title.finished {
-            border-right: none;
-            animation: none;
-        }
-
-        @keyframes blink-caret {
-            0%, 100% { border-color: transparent; }
-            50% { border-color: #FFE986; }
-        }
-
-        @media (max-width: 767.98px) {
-            #typed-title {
-                font-size: 32px;
-            }
-        }
-  #typewriter-title {
-    font-size: 48px;
-    font-weight: 700;
-    text-transform: capitalize;
-    background: linear-gradient(90deg, #FFE986 0%, #C48127 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent;
-    white-space: nowrap;
-    overflow: hidden;
-    border-right: 3px solid #FFE986;
-    display: inline-block;
-    animation: blink 0.75s step-end infinite;
-}
-
-@keyframes blink {
-  50% { border-color: transparent; }
-}
-@media (max-width: 767px) {
-        .phone-flex {
-            flex-direction: row;
-        }
-
-        .phone-flex select,
-        .phone-flex input {
+        .country-code {
             flex: 1;
-            width: auto;
+        }
+
+        .page-header {
+            padding: 60px 0 30px;
+        }
+
+        #phone{
+          height: 63px;
         }
     }
 
+    @media (max-width: 576px) {
+        .section-title {
+            font-size: 2.2rem;
+        }
+
+        .form-input {
+            height: 56px;
+            padding: 24px 20px 8px;
+        }
+    }
 </style>
+
+<!-- Header Section -->
 <section class="page-header">
-   <div class="container">
-        <div class="page-header__inner">
-            <h2 id="typed-title"></h2>
-        </div>
+    <div class="container">
+        <h1 class="section-title">Become Sponsor</h1>
     </div>
-</section>    
-<section class="form-section">
+</section>
+
+<!-- Sponsor Form Section -->
+<section class="sponsor-section">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-10 col-lg-7">
-                @if ($errors->any())
-                    <div class="alert alert-danger text-start">
-                        <ul class="mb-0">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-
-                <form action="{{ route('web.register.store') }}" method="post" id="sponsor-form">
-                    @csrf
-
-                    <div class="form-wrap">
-                        <input class="form-input" id="name" type="text" name="name" placeholder="Full Name" required>
-                    </div>
-
-                    <div class="form-wrap">
-                        <input class="form-input" id="email" type="email" name="email" placeholder="Email" required>
-                    </div>
-
-                    <div class="form-wrap">
-                        <label class="form-label"></label>
-                        <div class="phone-flex">
-                            <select class="code-select" name="country_code" id="country_code" required>
-                                <option value="+971">UAE (+971)</option>
-                                <option value="+20">Egypt (+20)</option>
-                                <option value="+966">Saudi Arabia (+966)</option>
-                                <option value="+965">Kuwait (+965)</option>
-                                <option value="+964">Iraq (+964)</option>
-                                <option value="+963">Syria (+963)</option>
-                                <option value="+962">Jordan (+962)</option>
-                                <option value="+968">Oman (+968)</option>
-                                <option value="+973">Bahrain (+973)</option>
-                                <option value="+974">Qatar (+974)</option>
-                                <option value="+212">Morocco (+212)</option>
-                                <option value="+1">USA (+1)</option>
-                                <option value="+44">UK (+44)</option>
-                            </select>
-                            <input class="phone-input" id="phone" type="tel" name="phone" placeholder="Phone Number" required>
+            <div class="col-lg-8 col-md-10">
+                <div class="form-container">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul class="mb-0">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
                         </div>
-                        <small id="phone-error" class="text-danger d-none">Invalid phone number for selected country.</small>
-                    </div>
+                    @endif
 
-                    <div class="form-wrap">
-                        <input class="form-input" id="job" type="text" name="job" placeholder="Job Title" required>
-                    </div>
+                    <form action="{{ route('web.register.store') }}" method="post" id="sponsor-form">
+                        @csrf
 
-                    <div class="form-wrap">
-                        <input class="form-input" id="company_name" type="text" name="company_name" placeholder="Company Name" required>
-                    </div>
+                        <!-- Name Field -->
+                        <div class="form-group">
+                            <input class="form-input" id="name" type="text" name="name" placeholder=" " required>
+                            <label class="form-label" for="name">Full Name</label>
+                        </div>
 
-                    <input type="hidden" name="type" value="2">
+                        <!-- Email Field -->
+                        <div class="form-group">
+                            <input class="form-input" id="email" type="email" name="email" placeholder=" " required>
+                            <label class="form-label" for="email">Email Address</label>
+                        </div>
 
-                    <div class="text-center">
-                        <button class="thm-btn" type="submit">Submit</button>
-                    </div>
-                </form>
+                        <!-- Phone Field -->
+                        <div class="form-group">
+                            <div class="phone-group">
+                                <div class="country-code">
+                                    <select class="country-select" name="country_code" id="country_code" required>
+                                        <option value="+971">UAE (+971)</option>
+                                        <option value="+20">Egypt (+20)</option>
+                                        <option value="+966">Saudi (+966)</option>
+                                        <option value="+965">Kuwait (+965)</option>
+                                        <option value="+964">Iraq (+964)</option>
+                                        <option value="+963">Syria (+963)</option>
+                                        <option value="+962">Jordan (+962)</option>
+                                        <option value="+968">Oman (+968)</option>
+                                        <option value="+973">Bahrain (+973)</option>
+                                        <option value="+974">Qatar (+974)</option>
+                                        <option value="+212">Morocco (+212)</option>
+                                        <option value="+1">USA (+1)</option>
+                                        <option value="+44">UK (+44)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group phone-input">
+                                    <input class="form-input" id="phone" type="tel" name="phone" placeholder=" " required>
+                                    <label class="form-label" for="phone">Phone Number</label>
+                                </div>
+                            </div>
+                            <small id="phone-error" class="text-danger d-none">Invalid phone number for selected country</small>
+                        </div>
+
+                        <!-- Job Title Field -->
+                        <div class="form-group">
+                            <input class="form-input" id="job" type="text" name="job" placeholder=" " required>
+                            <label class="form-label" for="job">Job Title</label>
+                        </div>
+
+                        <!-- Company Name Field -->
+                        <div class="form-group">
+                            <input class="form-input" id="company_name" type="text" name="company_name" placeholder=" " required>
+                            <label class="form-label" for="company_name">Company Name</label>
+                        </div>
+
+                        <input type="hidden" name="type" value="2">
+
+                        <!-- Submit Button -->
+                        <button class="submit-btn" type="submit">
+                            Become a Sponsor
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
         const form = document.getElementById("sponsor-form");
         const phoneInput = document.getElementById("phone");
         const countryCode = document.getElementById("country_code");
@@ -277,7 +295,7 @@
             '+44': [/^7\d{9}$/],
         };
 
-        form.addEventListener("submit", function (e) {
+        form.addEventListener("submit", function(e) {
             const code = countryCode.value;
             let phone = phoneInput.value.trim().replace(/\D/g, '');
 
@@ -306,36 +324,6 @@
                 phoneInput.classList.remove("is-invalid");
             }
         });
-    });
-</script>
-<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        AOS.init({
-            duration: 1000,
-            once: true
-        });
-    });
-</script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const text = @json(__('Become Sponsor'));
-        const target = document.getElementById("typed-title");
-        let index = 0;
-
-        function typeWriter() {
-            if (index < text.length) {
-                target.innerHTML += text.charAt(index);
-                index++;
-                setTimeout(typeWriter, 100);
-            } else {
-                target.classList.add('finished');
-            }
-        }
-
-        typeWriter();
     });
 </script>
 @endsection

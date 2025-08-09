@@ -29,7 +29,7 @@ class HomeController extends Controller
         ->orderBy('section_order')
         ->get()
         ->keyBy('id');
-$companies = Company::where('active', 1)
+$companies = Company::where('active', 1)  ->orderBy('count_vote', 'desc')
     ->orderByRaw("CASE WHEN category = 'Top 100 Member' THEN 0 ELSE 1 END")
     ->get();
 

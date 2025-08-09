@@ -27,7 +27,9 @@ class PrizeController extends Controller
     $schedule_section = HomeSection::where('is_active', true)->where('id', 5)->first();
     $event           = Event::first();
         $companies = Company::where('active', 1)->get();
-$prizes=Prize::where('active',1)->get();
+$prizes = Prize::where('active', 1)
+               ->orderBy('order', 'asc') // أو 'desc' للترتيب العكسي
+               ->get();
   $sponsors=Sponsor::where('active', true)
         ->orderBy('created_at', 'desc')
         ->get();

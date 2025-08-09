@@ -26,8 +26,10 @@ class AboutController extends Controller
     $speakers        = Speaker::where('active', true)->paginate(6);
     $schedule_section = HomeSection::where('is_active', true)->where('id', 5)->first();
     $event           = Event::first();
-        $companies = Company::where('active', 1)->get();
-$prizes=Prize::where('active',1)->take(4)->get();
+        $companies = Company::where('active', 1)               ->orderBy('count_vote', 'desc') // أو 'desc' للترتيب العكسي
+->get();
+$prizes=Prize::where('active',1)               ->orderBy('order', 'asc') // أو 'desc' للترتيب العكسي
+->take(4)->get();
   $sponsors=Sponsor::where('active', true)
         ->orderBy('created_at', 'desc')
         ->get();

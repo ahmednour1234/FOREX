@@ -245,7 +245,7 @@
     <!--Page Header Start-->
 <section class="page-header">
     {{-- الخلفية الديناميكية --}}
-   
+
    <div class="container">
         <div class="page-header__inner">
             <h2 id="typed-title"></h2>
@@ -335,7 +335,7 @@
 
 
         <!--CTA One Start-->
-        
+
         <!--CTA One End-->
 {{-- في ملف layout الرئيسي --}}
 <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">

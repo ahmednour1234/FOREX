@@ -13,6 +13,7 @@ class Prize extends Model
         'img',
         'active',
         'description_ar',
-        'description_en'
+        'description_en',
+        'order'
     ];
 }

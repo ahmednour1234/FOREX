@@ -318,5 +318,6 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth'])->group(func
 Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::get('contact-us', [ContactUsController::class, 'index'])->name('dashboard.contact.index');
 });
+Route::delete('companies/{company}', [CompanyController::class, 'destroy'])->name('dashboard.companies.destroy');
 
 

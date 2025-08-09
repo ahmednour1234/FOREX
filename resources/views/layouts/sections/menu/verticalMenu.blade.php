@@ -11,7 +11,7 @@ $configData = Helper::appClasses();
       <span class="app-brand-logo demo">
         @include('_partials.macros',["height"=>20])
       </span>
-      <span class="app-brand-text demo menu-text fw-bold">Forex</span>
+      <span class="app-brand-text demo menu-text fw-bold">Top Trusted</span>
     </a>
 
     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">

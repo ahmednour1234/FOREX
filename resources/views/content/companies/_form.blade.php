@@ -87,7 +87,11 @@
             <option value="Average" {{ old('category', $company->category ?? '') === 'Average' ? 'selected' : '' }}>Average</option>
         </select>
     </div>
-
+    <div class="col-md-6 mb-3">
+        <label class="form-label fw-bold">@lang('company.voting')</label>
+        <input type="number" name="count_vote" class="form-control" placeholder="@lang('company.voting')" min="0"
+               value="{{ old('count_vote', $company->count_vote	 ?? 0) }}">
+    </div>
     {{-- الصورة --}}
     <div class="mb-3">
         <label class="form-label">Image</label>

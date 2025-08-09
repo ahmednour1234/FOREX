@@ -22,7 +22,9 @@ class Company extends Model
         'active',
         'regulation',
         'stars',
-        'category'
+        'category',
+                'order'
+
     ];
 
     protected $casts = [

@@ -59,13 +59,34 @@
             </select>
           </div>
 
-          {{-- Upload File --}}
+          {{-- Select Event Name --}}
+          <div class="mb-3">
+            <label class="form-label">{{ __('becomesponsors.event_name') }}</label>
+            <select name="event_name" class="form-select" required>
+              <option value="">{{ __('becomesponsors.choose_event_name') }}</option>
+              @foreach($events as $event)
+                <option value="{{ $event->name }}">{{ $event->name }}</option>
+              @endforeach
+            </select>
+          </div>
+
+          {{-- Upload Excel File --}}
           <div class="mb-3">
             <label class="form-label">{{ __('becomesponsors.choose_excel_file') }}</label>
             <input type="file" name="file" class="form-control" accept=".xlsx,.csv" required>
           </div>
 
-          <button type="submit" class="btn btn-success">{{ __('becomesponsors.import_btn') }}</button>
+          {{-- Send Email Checkbox --}}
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" name="send_email" id="send_email" value="1">
+            <label class="form-check-label" for="send_email">
+              {{ __('becomesponsors.send_email_with_qr') }}
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-success">
+            {{ __('becomesponsors.import_btn') }}
+          </button>
         </form>
       </div>
 
@@ -95,7 +116,9 @@
           </div>
 
           <div class="text-end mt-3">
-            <button type="submit" class="btn btn-info">{{ __('becomesponsors.export_btn') }}</button>
+            <button type="submit" class="btn btn-info">
+              {{ __('becomesponsors.export_btn') }}
+            </button>
           </div>
         </form>
       </div>

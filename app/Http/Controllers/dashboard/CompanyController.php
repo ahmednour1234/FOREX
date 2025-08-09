@@ -34,7 +34,8 @@ class CompanyController extends Controller
             'image' => 'nullable|image|max:2048',
             'regulation' => 'nullable|string',
             'stars' => 'nullable',
-                        'category'=>'nullable'
+                        'category'=>'nullable',
+                        'count_vote'=>'nullable'
 
         ]);
 
@@ -70,7 +71,8 @@ class CompanyController extends Controller
             'image' => 'nullable|image|max:2048',
             'regulation' => 'nullable|string',
             'stars' => 'nullable',
-            'category'=>'nullable'
+            'category'=>'nullable',
+                        'count_vote'=>'nullable'
         ]);
 
         if ($request->hasFile('image')) {
@@ -94,6 +96,19 @@ class CompanyController extends Controller
 
         return redirect()->back()->with('success', 'Company activated.');
     }
+    public function destroy(Company $company)
+{
+    // حذف الصورة إذا كانت موجودة
+    if ($company->image && file_exists(public_path($company->image))) {
+        @unlink(public_path($company->image));
+    }
+
+    // حذف السجل من قاعدة البيانات
+    $company->delete();
+
+    return redirect()->route('dashboard.companies.index')->with('success', 'Company deleted successfully.');
+}
+
 
     public function deactivate($id)
     {

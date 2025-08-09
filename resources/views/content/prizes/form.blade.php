@@ -40,7 +40,11 @@
         <textarea name="description_en" class="form-control" rows="3"
                   placeholder="@lang('prizes.description_en')">{{ old('description_en', $prize->description_en ?? '') }}</textarea>
     </div>
-
+    <div class="col-md-6 mb-3">
+        <label class="form-label fw-bold">@lang('prizes.order')</label>
+        <input type="number" name="order" class="form-control" placeholder="@lang('prizes.order')" min="0"
+               value="{{ old('order', $prize->order ?? 0) }}">
+    </div>
     <!-- الصورة -->
     <div class="col-md-6 mb-3">
         <label class="form-label fw-bold">@lang('prizes.image')</label>

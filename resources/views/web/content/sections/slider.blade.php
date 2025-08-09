@@ -1,186 +1,596 @@
-<section class="banner-one">
-    {{-- صورة أو فيديو --}}
-    @if($home_slider && $home_slider->media_type == 'image')
-        <div class="banner-one__bg jarallax"
-             data-jarallax
-             data-speed="0.2"
-             data-imgPosition="50% 0%"
-             style="background-image: url('{{ asset($home_slider->media_path) }}');">
-        </div>
-    @elseif($home_slider && $home_slider->media_type == 'video')
-        <div class="banner-one__bg" style="padding: 0;">
-            <video autoplay muted loop playsinline
-                   style="width: 100%; max-height: 110vh; object-fit: cover; display: block;">
-                <source src="{{ asset($home_slider->media_path) }}" type="video/mp4">
-                {{ __('home_sections.your_browser_does_not_support_video') }}
-            </video>
-        </div>
-    @endif
+@php
+    use App\Models\Setting;
+    $setting = Setting::first();
+@endphp
 
-    <div class="container">
-        <div class="banner-one__inner text-center px-3">
-            {{-- العداد الزمني --}}
-            @if($event && $event->event_date)
-                <div class="banner-one__countdown-timer-box"
-                     data-aos="fade-up"
-                     data-aos-delay="200"
-                     style="font-family: 'Open Sans', sans-serif; font-size: 25px;">
-                    <div class="countdown time-countdown-two"
-                         data-countdown-time="{{ \Carbon\Carbon::parse($event->event_date)->format('Y/m/d H:i:s') }}">
-                    </div>
+<section class="luxury-banner-section">
+    <!-- طبقة الخلفية الشفافة -->
+    <div class="banner-overlay"></div>
+
+    <!-- طبقة الجسيمات الذهبية -->
+    <div class="gold-particles" id="gold-particles"></div>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="luxury-container">
+        <!-- العداد الزمني الذهبي -->
+        <div class="gold-countdown-wrapper">
+            <h3 class="countdown-title">COUNTDOWN TO EVENT</h3>
+            <div class="gold-countdown-grid">
+                <div class="countdown-box">
+                    <div class="countdown-number" id="days">00</div>
+                    <div class="countdown-label">DAYS</div>
                 </div>
-            @endif
-
-            {{-- اسم الحدث --}}
-            <h2 class="banner-one__title"
-                style="color:white; font-family: 'Barlow Condensed', sans-serif; font-size: 60px;"
-                data-aos="fade-in"
-                data-aos-delay="600">
-                {{ $event->name_en ?? 'Event Title' }}
-            </h2>
-
-            {{-- التاريخ --}}
-            <p class="banner-one__date"
-               data-aos="fade-up"
-               data-aos-delay="500"
-               style="font-family: 'Open Sans', sans-serif; font-size: 24px; color: #fff;">
-                {{ \Carbon\Carbon::parse($event->event_date)->translatedFormat('F jS, Y - h:i A') }}
-            </p>
-
-            {{-- العنوان --}}
-            <p class="banner-one__address"
-               data-aos="fade-up"
-               data-aos-delay="700"
-               style="font-family: 'Open Sans', sans-serif; font-size: 24px; color: #fff;">
-                {{ $event->location ?? 'Event Location' }}
-            </p>
-
-            {{-- الزر --}}
-            <div class="banner-one__btn-box" data-aos="fade-up" data-aos-delay="900">
-                <a href="{{ route('web.becomesponsor') }}" class="banner-one__btn thm-btn" style="text-decoration: none;">
-                    Become Sponsor <span class="icon-arrow-right"></span>
-                </a>
+                <div class="countdown-separator">:</div>
+                <div class="countdown-box">
+                    <div class="countdown-number" id="hours">00</div>
+                    <div class="countdown-label">HOURS</div>
+                </div>
+                <div class="countdown-separator">:</div>
+                <div class="countdown-box">
+                    <div class="countdown-number" id="minutes">00</div>
+                    <div class="countdown-label">MINUTES</div>
+                </div>
+                <div class="countdown-separator">:</div>
+                <div class="countdown-box">
+                    <div class="countdown-number" id="seconds">00</div>
+                    <div class="countdown-label">SECONDS</div>
+                </div>
             </div>
         </div>
+
+        <!-- عنوان الحدث -->
+        <h1 class="luxury-event-title">{{ $event->name_en ?? 'PREMIUM EVENT' }}</h1>
+
+        <!-- معلومات الحدث -->
+        <div class="event-info-grid">
+            <div class="info-item">
+                <i class="fas fa-calendar-alt gold-icon"></i>
+                <div class="info-text">
+                    <p class="info-label">DATE & TIME</p>
+                    <p class="info-value">{{ \Carbon\Carbon::parse($event->event_date)->translatedFormat('F jS, Y - h:i A') }}</p>
+                </div>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-map-marker-alt gold-icon"></i>
+                <div class="info-text">
+                    <p class="info-label">LOCATION</p>
+                    <p class="info-value">{{ $event->location ?? 'Venue Name' }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- زر Become Sponsor -->
+        <a href="{{ route('web.becomesponsor') }}" class="gold-sponsor-btn thm-btn">
+            <span>BECOME A SPONSOR</span>
+            <div class="btn-ripple"></div>
+            <div class="btn-shine"></div>
+        </a>
+    </div>
+
+    <!-- مؤشر التمرير -->
+    <div class="gold-scroll-indicator">
+        <div class="scroll-line"></div>
     </div>
 </section>
 
-{{-- AOS Animation --}}
-<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-<script>
-    AOS.init({
-        duration: 500,
-        once: true
-    });
-</script>
+<!-- الخطوط والأيقونات -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-{{-- Responsive Custom Style --}}
+<!-- مكتبة الجسيمات -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
 <style>
-    @media (max-width: 768px) {
-        .banner-one__title {
-            font-size: 32px !important;
-        }
+:root {
+    --gold-primary: #D4AF37;
+    --gold-secondary: #FFD700;
+    --gold-dark: #B8860B;
+    --black-primary: #121212;
+    --black-secondary: #1E1E1E;
+    --white: #FFFFFF;
+    --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
 
-        .banner-one__date,
-        .banner-one__address,
-        .banner-one__countdown-timer-box {
-            font-size: 18px !important;
-        }
+.luxury-banner-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--black-primary);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    overflow: hidden;
+}
 
-        .banner-one__btn {
-            font-size: 16px;
-            padding: 10px 20px;
-        }
+.banner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(18, 18, 18, 0.85);
+    z-index: 1;
+}
 
-        .banner-one__inner {
-            padding-top: 40px;
-            padding-bottom: 40px;
-        }
-    }
+.gold-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
 
-    @media (max-width: 480px) {
-        .banner-one__title {
-            font-size: 28px !important;
-        }
+.luxury-container {
+    position: relative;
+    z-index: 3;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 160px 20px;
+}
 
-        .banner-one__btn {
-            padding: 8px 16px;
-            font-size: 14px;
-        }
-    }
+/* تصميم العداد الزمني */
+.gold-countdown-wrapper {
+    margin-bottom: 20px;
+}
 
+.countdown-title {
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 4px;
+    color: var(--gold-primary);
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    position: relative;
+    display: inline-block;
+}
 
-@media (max-width: 576px) {
-  .banner-one__countdown-timer-box {
-    font-size: 14px;
-  }
+.countdown-title:after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+}
 
-  .banner-one__countdown-timer-box .time-countdown-two {
+.gold-countdown-grid {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-wrap: nowrap;
-    gap: 6px;
-    padding: 33px;
-    margin: 0 auto;
-  }
+    gap: 15px;
+    margin-top: 40px;
+}
 
-  .banner-one__countdown-timer-box .time-countdown-two li {
-    list-style: none;
+.countdown-box {
+    background: rgba(30, 30, 30, 0.7);
+    border: 1px solid var(--gold-dark);
+    border-radius: 12px;
+    width: 120px;
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: var(--transition);
+}
+
+.countdown-box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
+    border-color: var(--gold-primary);
+}
+
+.countdown-box:before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+    transform: rotate(45deg);
+    transition: var(--transition);
+}
+
+.countdown-box:hover:before {
+    left: 100%;
+    top: 100%;
+}
+
+.countdown-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 60px;
+    font-weight: 700;
+    color: var(--gold-primary);
+    line-height: 1;
+    margin-bottom: 5px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    transition: var(--transition);
+}
+
+.countdown-label {
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--gold-secondary);
+}
+
+.countdown-separator {
+    font-size: 40px;
+    color: var(--gold-primary);
+    margin: 0 5px;
+    align-self: flex-end;
+    padding-bottom: 30px;
+}
+
+/* عنوان الحدث */
+.luxury-event-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 72px;
+    font-weight: 700;
+    margin: 10px 0;
+    color: var(--white);
+    position: relative;
+    display: inline-block;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.luxury-event-title:after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: var(--gold-primary);
+}
+
+/* معلومات الحدث */
+.event-info-grid {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin: 35px 0;
+    flex-wrap: wrap;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: rgba(30, 30, 30, 0.7);
+    border-left: 3px solid var(--gold-primary);
+    padding: 20px 30px;
+    max-width: 350px;
+    width: 100%;
+    text-align: left;
+    transition: var(--transition);
+}
+
+.info-item:hover {
+    transform: translateY(-5px);
+    background: rgba(30, 30, 30, 0.9);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.gold-icon {
+    font-size: 24px;
+    color: var(--gold-primary);
+    width: 50px;
+    height: 50px;
+    background: rgba(212, 175, 55, 0.1);
+    border-radius: 50%;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.info-label {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--gold-primary);
+    margin-bottom: 8px;
+}
+
+.info-value {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--white);
     margin: 0;
-    padding: 0;
-    flex: 0 0 auto;
-  }
+}
 
-  .banner-one__countdown-timer-box .time-countdown-two .box {
-    width: 52px;
-    height: 52px;
-    border-radius: 6px;
-    padding: 4px;
+/* Btn Became A Sponsor */
+.gold-sponsor-btn:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--gold-primary), var(--gold-secondary));
+    opacity: 0;
+    z-index: -1;
+    transition: all 0.3s ease;
+}
+
+.gold-sponsor-btn:hover:before {
+    opacity: 0.3;
+}
+
+.btn-ripple {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    opacity: 0;
+}
+
+.gold-sponsor-btn:hover .btn-ripple {
+    animation: ripple 1s ease-out;
+}
+
+.btn-shine {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 50%;
+    height: 200%;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(45deg);
+    animation: shine 3s infinite;
+}
+
+@keyframes ripple {
+    0% { width: 0; height: 0; opacity: 0.5; }
+    100% { width: 500px; height: 500px; opacity: 0; }
+}
+
+@keyframes shine {
+    0% { left: -50%; }
+    100% { left: 150%; }
+}
+
+/* مؤشر التمرير */
+.gold-scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    position: relative;
-  }
-
-  .banner-one__countdown-timer-box .time-countdown-two .box:before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 6px;
-    border: 2px solid transparent;
-    background: linear-gradient(180deg, #FFE986, rgba(140, 30, 13, .33)) border-box;
-    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    transition: all 500ms ease;
-    z-index: -1;
-  }
-
-  .banner-one__countdown-timer-box .time-countdown-two .box span {
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 1.2;
-    color: white;
-    text-align: center;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-  }
-
-  .banner-one__countdown-timer-box .time-countdown-two .box .timeRef {
-    font-size: 9px;
-    margin-top: 2px;
-    line-height: 1;
-    color: white;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-  }
+    z-index: 3;
 }
 
+.scroll-line {
+    width: 2px;
+    height: 50px;
+    background: linear-gradient(to bottom, var(--gold-primary), transparent);
+    position: relative;
+    overflow: hidden;
+}
 
-@media only screen and (max-width: 767px) {
-    .banner-one {
-        padding: 120px 0 120px;
+.scroll-line:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 15px;
+    background: var(--gold-primary);
+    animation: scrollAnimation 2s infinite;
+}
+
+@keyframes scrollAnimation {
+    0% { top: -15px; }
+    100% { top: 50px; }
+}
+
+/* تأثيرات الأرقام */
+@keyframes flipNumber {
+    0% { transform: rotateX(0deg); }
+    50% { transform: rotateX(90deg); }
+    100% { transform: rotateX(0deg); }
+}
+
+.flip {
+    animation: flipNumber 0.5s ease-in-out;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .countdown-box {
+        width: 100px;
+        height: 120px;
+    }
+
+    .countdown-number {
+        font-size: 50px;
+    }
+
+    .luxury-event-title {
+        font-size: 60px;
+    }
+}
+
+@media (max-width: 992px) {
+    .countdown-box {
+        width: 80px;
+        height: 100px;
+    }
+
+    .countdown-number {
+        font-size: 40px;
+    }
+
+    .countdown-separator {
+        font-size: 30px;
+        padding-bottom: 20px;
+    }
+
+    .luxury-event-title {
+        font-size: 50px;
+    }
+
+    .info-item {
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .gold-countdown-grid {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .countdown-box {
+        width: calc(50% - 10px);
+        height: 100px;
+    }
+
+    .countdown-separator {
+        display: none;
+    }
+
+    .luxury-event-title {
+        font-size: 42px;
+    }
+
+    .event-info-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .info-item {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .countdown-number {
+        font-size: 36px;
+    }
+
+    .luxury-event-title {
+        font-size: 36px;
+    }
+
+    .gold-sponsor-btn {
+        padding: 15px 30px;
+        font-size: 14px;
     }
 }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // تهيئة جسيمات الذهب
+    if (document.getElementById('gold-particles')) {
+        particlesJS('gold-particles', {
+            particles: {
+                number: { value: 60, density: { enable: true, value_area: 800 } },
+                color: { value: "#D4AF37" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: true },
+                size: { value: 4, random: true },
+                line_linked: { enable: true, distance: 150, color: "#D4AF37", opacity: 0.3, width: 1 },
+                move: { enable: true, speed: 2, direction: "none", random: true, straight: false, out_mode: "out" }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "repulse" },
+                    onclick: { enable: true, mode: "push" }
+                }
+            }
+        });
+    }
+
+    // العداد الزمني
+    function updateCountdown() {
+        const eventDate = new Date("{{ \Carbon\Carbon::parse($event->event_date)->format('Y/m/d H:i:s') }}").getTime();
+        const now = new Date().getTime();
+        const distance = eventDate - now;
+
+        if (distance < 0) {
+            clearInterval(countdownTimer);
+            document.querySelector('.gold-countdown-grid').innerHTML = '<div class="countdown-ended">The Event Has Started!</div>';
+            return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // تطبيق تأثير الفليب عند تغيير الأرقام
+        if (days !== currentDays) {
+            document.getElementById('days').classList.add('flip');
+            setTimeout(() => {
+                document.getElementById('days').textContent = formatTime(days);
+                document.getElementById('days').classList.remove('flip');
+            }, 250);
+        }
+
+        if (hours !== currentHours) {
+            document.getElementById('hours').classList.add('flip');
+            setTimeout(() => {
+                document.getElementById('hours').textContent = formatTime(hours);
+                document.getElementById('hours').classList.remove('flip');
+            }, 250);
+        }
+
+        if (minutes !== currentMinutes) {
+            document.getElementById('minutes').classList.add('flip');
+            setTimeout(() => {
+                document.getElementById('minutes').textContent = formatTime(minutes);
+                document.getElementById('minutes').classList.remove('flip');
+            }, 250);
+        }
+
+        if (seconds !== currentSeconds) {
+            document.getElementById('seconds').classList.add('flip');
+            setTimeout(() => {
+                document.getElementById('seconds').textContent = formatTime(seconds);
+                document.getElementById('seconds').classList.remove('flip');
+            }, 250);
+        }
+
+        currentDays = days;
+        currentHours = hours;
+        currentMinutes = minutes;
+        currentSeconds = seconds;
+    }
+
+    function formatTime(time) {
+        return time < 10 ? `0${time}` : time;
+    }
+
+    let currentDays = 0, currentHours = 0, currentMinutes = 0, currentSeconds = 0;
+    const countdownTimer = setInterval(updateCountdown, 1000);
+    updateCountdown(); // التشغيل الأولي
+});
+</script>
