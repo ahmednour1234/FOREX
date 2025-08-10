@@ -2,7 +2,11 @@
 <section class="section bg-default mt-5 pt-5 parallax-container section">
     <div class="parallax-content section-lg context-dark text-center" style="background-color: #F4F3F2;">
         <div class="container">
+<<<<<<< HEAD
             <h6 class="text-center" style="color:#cc252e;">
+=======
+            <h6 class="text-center" style="color:#E73701;">
+>>>>>>> origin/affaliate
                 {{ $section->title[$locale] ?? '' }}
             </h6>
             <h3 class="text-center" style="color:black;">
@@ -97,7 +101,11 @@
         transform: translateY(-50%);
         width: 40px;
         height: 40px;
+<<<<<<< HEAD
         background: #cc252e;
+=======
+        background: rgba(231, 55, 1, 0.95);
+>>>>>>> origin/affaliate
         color: #fff;
         border-radius: 50%;
         z-index: 10;
@@ -108,7 +116,11 @@
     }
 
     .custom-swiper-btn:hover {
+<<<<<<< HEAD
         background: #cc252e
+=======
+        background: rgba(200, 30, 0, 1);
+>>>>>>> origin/affaliate
     }
 
     .swiper-button-prev::after,

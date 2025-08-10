@@ -56,7 +56,11 @@
         font-size: 18px;
         font-weight: 800;
         color: white;
+<<<<<<< HEAD
         background: linear-gradient(to right, #000000, #cc252e);
+=======
+        background: linear-gradient(to right, #000000, #E73701);
+>>>>>>> origin/affaliate
         border: none;
         border-radius: 50px;
         transition: all 0.3s ease-in-out;

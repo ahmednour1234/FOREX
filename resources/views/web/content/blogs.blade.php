@@ -69,7 +69,11 @@
     }
 
     .news-title a:hover {
+<<<<<<< HEAD
         color: #cc252e;
+=======
+        color: #e73701;
+>>>>>>> origin/affaliate
     }
 
     .news-text {
@@ -79,7 +83,11 @@
     }
 
     .news-link {
+<<<<<<< HEAD
         color: #cc252e;
+=======
+        color: #e73701;
+>>>>>>> origin/affaliate
         font-weight: 500;
         text-decoration: none;
         margin-top: 10px;
@@ -126,12 +134,20 @@
     }
 
     .pagination-classic-link:hover {
+<<<<<<< HEAD
         background-color: #cc252e;
+=======
+        background-color: #e73701;
+>>>>>>> origin/affaliate
         color: #fff;
     }
 
     .pagination-classic-link.active {
+<<<<<<< HEAD
         background-color: #cc252e;
+=======
+        background-color: #e73701;
+>>>>>>> origin/affaliate
         color: #fff;
     }
 

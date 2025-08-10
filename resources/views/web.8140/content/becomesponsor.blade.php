@@ -1,164 +1,138 @@
 @extends('web.layouts.app')
 
 @section('content')
-@php $locale = app()->getLocale(); @endphp
-
 <style>
     .form-section {
-        padding: 60px 20px;
-        background: #f2f2f2;
+        padding: 60px 0;
+        background: white;
     }
 
     .form-title {
-        font-size: 34px;
-        font-weight: 800;
+        font-weight: bold;
+        margin-bottom: 30px;
+        font-size: 26px;
         text-align: center;
-        margin-bottom: 45px;
-        background: linear-gradient(90deg, #000, #E73701);
+        background: linear-gradient(to right, #E73701, #000000);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
 
     .form-wrap {
         position: relative;
-        margin-bottom: 28px;
-    }
-
-    .form-input,
-    .form-select {
-        width: 100%;
-        padding: 18px 20px;
-        border: 2px solid transparent;
-        border-radius: 14px;
-        background: #fff;
-        font-size: 16px;
-        font-weight: 600;
-        color: #000;
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
-        transition: 0.3s ease all;
-    }
-
-    .form-input:focus,
-    .form-select:focus {
-        outline: none;
-<<<<<<< HEAD
-        border-color: #cc252e;
-=======
-        border-color: #E73701;
->>>>>>> origin/affaliate
-        box-shadow: 0 0 0 3px rgba(231, 55, 1, 0.15);
+        margin-bottom: 20px;
     }
 
     .form-label {
         position: absolute;
-        top: 13px;
-        left: 22px;
-        font-size: 14px;
-        color: #777;
-        font-weight: 600;
+        top: 12px;
+        left: 20px;
+        font-size: 13px;
+        font-weight: bold;
+        color: #888;
         pointer-events: none;
-        transition: all 0.2s ease;
+        transition: all 0.2s ease-in-out;
     }
 
-    .form-input:focus + .form-label,
-    .form-input:not(:placeholder-shown) + .form-label,
-    .form-select:focus + .form-label {
-        top: -9px;
-        left: 15px;
-        font-size: 12px;
-        background: #f2f2f2;
-        padding: 0 5px;
-<<<<<<< HEAD
-        color: #cc252e;
-=======
-        color: #E73701;
->>>>>>> origin/affaliate
+    .form-input,
+    .form-select {
+        padding: 22px 20px 10px;
+        border: 1px solid #E73701;
+        border-radius: 50px;
+        font-size: 14px;
+        font-weight: bold;
+        background-color: white;
+        color: black;
+        width: 100%;
+        height: 80px;
+        box-sizing: border-box;
+        outline: none;
+    }
+
+    .form-input:focus,
+    .form-input:not(:placeholder-shown),
+    .form-select:focus {
+        color: #000;
+    }
+
+    .form-wrap.focused .form-label,
+    .form-wrap.filled .form-label {
+        display: none;
     }
 
     .btn-square {
-        width: 100%;
-        padding: 16px;
-<<<<<<< HEAD
-        background: linear-gradient(90deg, #cc252e, #000);
-=======
-        background: linear-gradient(90deg, #E73701, #000);
->>>>>>> origin/affaliate
-        border: none;
-        border-radius: 50px;
+        padding: 14px 60px;
+        background: #E73701;
+        font-size: 16px;
+        font-weight: bold;
         color: #fff;
-        font-size: 17px;
-        font-weight: 700;
+        border-radius: 50px;
         cursor: pointer;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        transition: transform 0.2s ease, opacity 0.3s ease;
+        transition: all 0.3s ease;
+        border: none;
     }
 
     .btn-square:hover {
-        transform: scale(1.03);
-        opacity: 0.95;
+        opacity: 0.9;
     }
 
     .alert-danger {
-        font-size: 14px;
-        border-radius: 8px;
-        padding: 12px;
-        background-color: #ff3b3b;
+        font-size: 13px;
+        border-radius: 6px;
+        padding: 10px;
+        background-color: #ff4444;
         color: #fff;
     }
 
     .phone-flex {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    flex-wrap: wrap;
-}
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: nowrap;
+    }
 
     .phone-flex select {
         flex: 0 0 30%;
-        height: 60px;
-        border-radius: 14px;
-        background: #fff;
-        border: 2px solid transparent;
-        font-weight: 600;
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
         text-align: center;
+        height: 80px;
+        border-radius: 50px;
+        background-color: #fff;
+        color: black;
+        border: 1px solid #E73701;
+        appearance: none;
     }
 
     .phone-flex input {
-        flex: 1 1 65%;
-        height: 60px;
-        border-radius: 14px;
-        border: 2px solid transparent;
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+        flex: 1;
+        height: 80px;
     }
 
     @media (max-width: 767px) {
         .phone-flex {
-            flex-direction: column;
-            align-items: stretch;
+            flex-direction: row;
+            gap: 10px;
         }
 
         .phone-flex select,
         .phone-flex input {
-            width: 100%;
-            flex: unset;
+            flex: 1;
+            width: auto;
+            font-size: 14px;
         }
     }
-
 </style>
 
 <section class="breadcrumbs-custom bg-image context-dark"
          style="background-image: url({{ asset('web/assets/images/bg-breadcrumbs-01-1894x424.jpg') }});">
     <div class="container text-center py-4">
-        <h3 class="breadcrumbs-custom-title">Register Now</h3>
+        <h3 class="breadcrumbs-custom-title">Become Sponsor</h3>
     </div>
 </section>
 
 <section class="form-section">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-10 col-lg-8 col-xl-6">
-                <h4 class="form-title">Register Now</h4>
+            <div class="col-md-10 col-lg-7">
+                <h4 class="form-title">Become Sponsor</h4>
 
                 @if ($errors->any())
                     <div class="alert alert-danger text-start">
@@ -170,15 +144,15 @@
                     </div>
                 @endif
 
-                <form action="{{ route('web.register.store') }}" method="post" class="rd-form rd-form-centered">
+                <form action="{{ route('web.register.store') }}" method="post">
                     @csrf
 
                     <div class="form-wrap">
-                        <input class="form-input" id="full_name_en" type="text" name="name" placeholder="Full Name" required>
+                        <input class="form-input" id="name" type="text" name="name" placeholder="Full Name" required>
                     </div>
 
                     <div class="form-wrap">
-                        <input class="form-input" id="email" type="email" placeholder="Email" name="email" required>
+                        <input class="form-input" id="email" type="email" name="email" placeholder="Email" required>
                     </div>
 
                     <div class="form-wrap">
@@ -199,16 +173,20 @@
                                 <option value="+1">USA (+1)</option>
                                 <option value="+44">UK (+44)</option>
                             </select>
-                            <input class="form-input" id="phone" type="tel" name="phone" placeholder="Phone Number" required>
+                            <input class="form-input" id="phone" type="tel" name="phone" placeholder="Phone" required>
                         </div>
                         <small id="phone-error" class="text-danger d-none">Invalid phone number for selected country.</small>
                     </div>
 
                     <div class="form-wrap">
-                        <input class="form-input" id="job_title" type="text" name="job" placeholder="Job Title" required>
+                        <input class="form-input" id="job" type="text" name="job" placeholder="Job" required>
                     </div>
 
-                    <input type="hidden" name="type" value="1">
+                    <div class="form-wrap">
+                        <input class="form-input" id="company_name" type="text" name="company_name" placeholder="Company Name" required>
+                    </div>
+
+                    <input type="hidden" name="type" value="2">
 
                     <div class="text-center">
                         <button class="btn-square" type="submit">Submit</button>
@@ -219,7 +197,28 @@
     </div>
 </section>
 
+
+
 <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll('.form-input').forEach(input => {
+            const wrap = input.closest('.form-wrap');
+
+            const toggleLabel = () => {
+                if (input.value.trim() !== '') {
+                    wrap.classList.add('filled');
+                } else {
+                    wrap.classList.remove('filled');
+                }
+            };
+
+            input.addEventListener('input', toggleLabel);
+            input.addEventListener('focus', () => wrap.classList.add('focused'));
+            input.addEventListener('blur', () => wrap.classList.remove('focused'));
+            toggleLabel();
+        });
+    });
+
     const phonePatterns = {
         '+20': [/^10/, /^11/, /^12/, /^15/],
         '+966': [/^5/],
@@ -238,15 +237,24 @@
 
     document.querySelector('form').addEventListener('submit', function (e) {
         const code = document.getElementById("country_code").value;
-        const phoneInput = document.getElementById("phone");
+        const phone = document.getElementById("phone").value.trim().replace(/\D/g, '');
         const errorText = document.getElementById("phone-error");
+        const phoneInput = document.getElementById("phone");
 
-        const rawPhone = phoneInput.value.trim().replace(/\D/g, '');
-        const numberWithoutCode = rawPhone.startsWith(code.replace('+', '')) ?
-            rawPhone.slice(code.length - 1) : rawPhone;
+        const numberWithoutCode = phone.startsWith(code.replace('+', '')) ? 
+            phone.slice(code.length - 1) : phone;
 
-        const patterns = phonePatterns[code] || [];
-        const isValid = patterns.some(p => p.test(numberWithoutCode));
+        const patterns = phonePatterns[code];
+        let isValid = false;
+
+        if (patterns) {
+            for (let pattern of patterns) {
+                if (pattern.test(numberWithoutCode)) {
+                    isValid = true;
+                    break;
+                }
+            }
+        }
 
         if (!isValid) {
             e.preventDefault();

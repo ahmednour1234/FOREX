@@ -47,7 +47,11 @@
     }
 
     .pricing-card .plan-name {
+<<<<<<< HEAD
         background: linear-gradient(to right, #cc252e, #000000);
+=======
+        background: linear-gradient(to right, #E73701, #000000);
+>>>>>>> origin/affaliate
         color: #fff;
         font-size: 20px;
         font-weight: 700;
@@ -77,7 +81,11 @@
         position: absolute;
         left: 0;
         top: 0;
+<<<<<<< HEAD
         color: #cc252e;
+=======
+        color: #E73701;
+>>>>>>> origin/affaliate
         font-weight: bold;
     }
 
@@ -91,7 +99,11 @@
     }
 
     .btn-primary-custom {
+<<<<<<< HEAD
         background: linear-gradient(to right, #cc252e, #000000);
+=======
+        background: linear-gradient(to right, #E73701, #000000);
+>>>>>>> origin/affaliate
         color: #fff;
         border: none;
         padding: 14px 30px;
@@ -110,7 +122,11 @@
         transform: scale(1.03);
         opacity: 0.95;
         color: #fff;
+<<<<<<< HEAD
         background: linear-gradient(to right, #cc252e, #cc252e);
+=======
+        background: linear-gradient(to right, #ff3c00, #6b1717);
+>>>>>>> origin/affaliate
     }
 </style>
 

@@ -5,146 +5,109 @@
 
 <style>
     .form-section {
-        padding: 60px 20px;
-        background: #f2f2f2;
+        padding: 60px 0;
+        background: white;
     }
 
     .form-title {
-        font-size: 34px;
-        font-weight: 800;
+        font-weight: bold;
+        margin-bottom: 30px;
+        font-size: 26px;
         text-align: center;
-        margin-bottom: 45px;
-        background: linear-gradient(90deg, #000, #E73701);
+        background: linear-gradient(to right, #E73701, #000000);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
 
     .form-wrap {
         position: relative;
-        margin-bottom: 28px;
-    }
-
-    .form-input,
-    .form-select {
-        width: 100%;
-        padding: 18px 20px;
-        border: 2px solid transparent;
-        border-radius: 14px;
-        background: #fff;
-        font-size: 16px;
-        font-weight: 600;
-        color: #000;
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
-        transition: 0.3s ease all;
-    }
-
-    .form-input:focus,
-    .form-select:focus {
-        outline: none;
-<<<<<<< HEAD
-        border-color: #cc252e;
-=======
-        border-color: #E73701;
->>>>>>> origin/affaliate
-        box-shadow: 0 0 0 3px rgba(231, 55, 1, 0.15);
+        margin-bottom: 20px;
     }
 
     .form-label {
         position: absolute;
-        top: 13px;
-        left: 22px;
-        font-size: 14px;
-        color: #777;
-        font-weight: 600;
+        top: 10px;
+        left: 20px;
+        font-size: 13px;
+        font-weight: bold;
+        color: #888;
         pointer-events: none;
-        transition: all 0.2s ease;
+        transition: all 0.2s ease-in-out;
     }
 
-    .form-input:focus + .form-label,
-    .form-input:not(:placeholder-shown) + .form-label,
-    .form-select:focus + .form-label {
-        top: -9px;
-        left: 15px;
-        font-size: 12px;
-        background: #f2f2f2;
-        padding: 0 5px;
-<<<<<<< HEAD
-        color: #cc252e;
-=======
-        color: #E73701;
->>>>>>> origin/affaliate
+    .form-input,
+    .form-select {
+        padding: 22px 20px 10px;
+        border: 1px solid #E73701;
+        border-radius: 50px;
+        font-size: 14px;
+        font-weight: bold;
+        background-color: white;
+        color: black;
+        width: 100%;
+        height: 70px;
+        box-sizing: border-box;
+        outline: none;
     }
 
     .btn-square {
-        width: 100%;
-        padding: 16px;
-<<<<<<< HEAD
-        background: linear-gradient(90deg, #cc252e, #000);
-=======
-        background: linear-gradient(90deg, #E73701, #000);
->>>>>>> origin/affaliate
-        border: none;
-        border-radius: 50px;
+        padding: 14px 60px;
+        background: #E73701;
+        font-size: 16px;
+        font-weight: bold;
         color: #fff;
-        font-size: 17px;
-        font-weight: 700;
+        border-radius: 50px;
         cursor: pointer;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        transition: transform 0.2s ease, opacity 0.3s ease;
+        transition: all 0.3s ease;
+        border: none;
     }
 
     .btn-square:hover {
-        transform: scale(1.03);
-        opacity: 0.95;
+        opacity: 0.9;
     }
 
     .alert-danger {
-        font-size: 14px;
-        border-radius: 8px;
-        padding: 12px;
-        background-color: #ff3b3b;
+        font-size: 13px;
+        border-radius: 6px;
+        padding: 10px;
+        background-color: #ff4444;
         color: #fff;
     }
 
     .phone-flex {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    flex-wrap: wrap;
-}
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: nowrap;
+    }
 
     .phone-flex select {
         flex: 0 0 30%;
-        height: 60px;
-        border-radius: 14px;
-        background: #fff;
-        border: 2px solid transparent;
-        font-weight: 600;
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
         text-align: center;
+        height: 70px;
+        border-radius: 50px;
+        background-color: #fff;
+        color: black;
+        border: 1px solid #E73701;
+        appearance: none;
     }
 
     .phone-flex input {
-        flex: 1 1 65%;
-        height: 60px;
-        border-radius: 14px;
-        border: 2px solid transparent;
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+        flex: 1;
+        height: 70px;
     }
 
     @media (max-width: 767px) {
         .phone-flex {
-            flex-direction: column;
-            align-items: stretch;
+            flex-direction: row; /* يُبقي الكود بجانب الرقم في الموبايل */
         }
 
         .phone-flex select,
         .phone-flex input {
-            width: 100%;
-            flex: unset;
+            flex: 1;
+            width: auto;
         }
     }
-
 </style>
 
 <section class="breadcrumbs-custom bg-image context-dark"
@@ -218,6 +181,7 @@
         </div>
     </div>
 </section>
+
 
 <script>
     const phonePatterns = {
