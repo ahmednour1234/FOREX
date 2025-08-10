@@ -75,4 +75,43 @@ class QrcodeController extends Controller
 
         return redirect()->back()->with('success', 'تم توليد كود جديد وإرسال البريد');
     }
+       public function scanner()
+    {
+        return view('content.qrcodes.scan');
+    }
+public function check(Request $request)
+    {
+        $code = $request->input('code');
+
+        // ✅ استخراج الكود فقط من الرابط إذا أُرسل رابط كامل
+        if (Str::startsWith($code, 'http')) {
+            $parts = explode('/', rtrim($code, '/'));
+            $code = end($parts);
+        }
+
+        $qr = QrcodeModel::where('short_code', $code)->first();
+
+        if (! $qr) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'رمز QR غير صالح.',
+            ]);
+        }
+
+        if ($qr->scan > 0) {
+            return response()->json([
+                'status' => 'scanned',
+                'message' => 'تم استخدام الرمز مسبقًا.',
+            ]);
+        }
+
+        $qr->scan += 1;
+        $qr->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'تم تسجيل الحضور بنجاح.',
+            'short_code' => $code,
+        ]);
+    }
 }

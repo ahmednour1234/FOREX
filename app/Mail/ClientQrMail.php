@@ -24,7 +24,7 @@ class ClientQrMail extends Mailable
 
     public function build()
     {
-        return $this->subject('تأكيد التسجيل - Forex Traders Summit')
+        return $this->subject('تأكيد التسجيل - Dubai Affiliate Summit ')
                     ->markdown('emails.client.qr');
     }
 }

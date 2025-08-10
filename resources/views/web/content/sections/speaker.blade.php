@@ -8,7 +8,7 @@
         <section class="parallax-container section mt-5" data-parallax-img="{{ asset($speaker_section->media_path) }}">
             <div class="parallax-content section-lg context-dark text-center">
                 <div class="container">
-<h6 style="color:#E73701; font-weight:bold;">
+<h6 style="color:#cc252e; font-weight:bold;">
     {{ $section->title[$locale] ?? '' }}
 </h6>
                     <h3>{{ $section->description[$locale] ?? '' }}</h3>

@@ -33,7 +33,7 @@
 </section>
 
 <!-- Multi Media Categories -->
-<section class="section section-lg bg-light text-center">
+<section class="section multimedia-categories section-lg bg-light text-center">
     <div class="container">
         <div class="row row-30 justify-content-center">
 
@@ -75,7 +75,7 @@
 <!-- Styles -->
 <style>
     .image-container-short {
-        height: 180px;
+        height: 200px;
         overflow: hidden;
         background-color: #f8f9fa;
     }
@@ -94,7 +94,20 @@
     .multimedia-card:hover {
         transform: translateY(-6px);
         box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-        border-color: #0d6efd;
+        border-color: #cc252;
     }
+    .multimedia-categories {
+      min-height: calc(100vh - 424px); /* Adjust based on your header/footer height */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .multimedia-categories .container {
+      width: 100%;
+    }
+    .multimedia-categories .container .col {
+      width: 100%;
+    }
+
 </style>
 @endsection

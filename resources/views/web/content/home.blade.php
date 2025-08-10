@@ -61,24 +61,26 @@
             /* المسافة بين الشعارات */
             align-items: center;
             justify-content: center;
+            margin-top: 40px;
         }
 
         .sponsor-item {
             flex: 0 0 auto;
-            width: 160px;
-            height: 100px;
+            width: 190px;
+            height: 190px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(255, 255, 255, 0.1);
+            background: linear-gradient(to right, #000000, #5b090973);
             border-radius: 12px;
             padding: 10px;
         }
 
         .sponsor-item img {
             max-width: 100%;
-            max-height: 80px;
+            max-height: 90%;
             object-fit: contain;
+            border-radius: 10px;
         }
 
         @keyframes sponsor-scroll {
@@ -120,38 +122,7 @@
 .gallery-thumb:hover {
     transform: scale(1.05);
 }
-.swiper-slide {
-    height: 300px; /* أو أي ارتفاع تريده */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
-.swiper-slide img {
-    width:400px;
-    height: 400px;
-    object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-}
-
-.swiper-slide img:hover {
-    transform: scale(1.03);
-}
-.gallery-grid-mobile {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
-  padding-bottom: 30px;
-}
-
-.gallery-grid-mobile .gallery-item img {
- width:400px;
-    height: 250px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
 @media (max-width: 767px) {
   .speaker-card {
     display: none;
@@ -160,69 +131,6 @@
   .speaker-card:nth-child(-n+4) {
     display: block;
   }
-}
-.custom-swiper-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 34px;
-  height: 34px;
-  background-color: rgba(0, 0, 0, 0.6);
-  border-radius: 50%;
-  z-index: 10;
-  color: #fff;
-}
-
-.swiper-button-prev.custom-swiper-btn {
-  left: -15px; /* ← أو 0px لو حابب يكون ملتصق بالحافة */
-}
-
-.swiper-button-next.custom-swiper-btn {
-  right: -15px;
-}
-
-.swiper-button-next::after,
-.swiper-button-prev::after {
-  font-size: 16px;
-}
-.swiper-button-next.custom-swiper-btn {
-    right: -35px;
-}
-.custom-swiper-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 34px;
-    height: 34px;
-    background-color: rgba(0, 0, 0, 0);
-    border-radius: 50%;
-    z-index: 10;
-    color: #fff;
-}
-@media (max-width: 768px) {
-  .custom-swiper-btn {
-    width: 28px;
-    height: 28px;
-  }
-
-  .swiper-button-next::after,
-  .swiper-button-prev::after {
-    font-size: 12px;
-  }
-
-  .swiper-button-prev.custom-swiper-btn {
-    left: 0px;
-  }
-
-  .swiper-button-next.custom-swiper-btn {
-    right: 0px;
-  }
-.gallery-grid-mobile .gallery-item img {
-    width: 200px;
-    height: 200px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
 }
 
 .btn-sm, .btn-group-sm > .btn {
@@ -236,18 +144,6 @@
       font-size: 45px !important;
     }
   }
-
-.swiper-button-next, .swiper-container-rtl .swiper-button-prev {
-    background-image: url(https://forextraderssummit.iqbrandx.com/public/web/assets/images/arrow left-01.svg);
-    right: 10px;
-    left: auto;
-}
-.swiper-button-prev, .swiper-container-rtl .swiper-button-next {
-    background-image: url(https://forextraderssummit.iqbrandx.com/public/web/assets/images/arrow-01.svg);
-
-    left: 10px;
-    right: auto;
-}
     @media (max-width: 991.98px) { /* أقل من شاشة اللابتوب */
         .responsive-title {
             font-size: 3rem !important;
@@ -325,12 +221,12 @@
                                     $description = $home_slider->description[$locale] ?? '';
                                 @endphp
 
-                                <h4 class="wow fadeInUp text-spacing-200" data-wow-delay=".8s" 
+                                <h4 class="wow fadeInUp text-spacing-200" data-wow-delay=".8s"
                                     data-caption-animate="fadeInUp" data-caption-delay="300" data-caption-duration="900">
                                     {{ $description }}
                                 </h4>
 
- 
+
 
 <h1 class="wow fadeScale responsive-title" data-caption-delay="100" data-caption-duration="900" style="font-size:6rem;">
     {{ $title }}
@@ -346,7 +242,7 @@
                         </svg>
                       </div>
                       <div class="unit-body">
-   
+
 
 <h5 class="text-spacing-100">
     <span class="big">
@@ -374,7 +270,7 @@
                       </div>
                     </div>
                   </li>
-            
+
                 </ul>
                         </div>
                     </div>
@@ -406,7 +302,7 @@
     @endif
 @foreach ($sections as $section)
     @switch($section->id)
-    
+
 
         @case(2)
             @include('web.content.sections.promo', ['section' => $section])

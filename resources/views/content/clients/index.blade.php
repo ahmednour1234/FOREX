@@ -60,14 +60,15 @@
             <th>{{ __('Registrations.country_code') }}</th>
             <th>{{ __('Registrations.phone') }}</th>
             <th>{{ __('Registrations.job') }}</th>
-            <th>{{ __('Registrations.active') }}</th>
+ <th>Experience</th>
+            <th>Status</th>
             <th>{{ __('Registrations.created_at') }}</th>
             <th>{{ __('Registrations.actions') }}</th>
           </tr>
         </thead>
         <tbody>
-          @forelse($clients as $client)
-            <tr>
+           @forelse($clients as $client)
+            <tr id="row-{{ $client->id }}">
               <td>{{ $loop->iteration }}</td>
               <td>{{ $client->name }}</td>
               <td>{{ $client->email }}</td>
@@ -75,20 +76,35 @@
               <td>{{ $client->phone }}</td>
               <td>{{ $client->job }}</td>
               <td>
-                <span class="badge {{ $client->active ? 'bg-success' : 'bg-secondary' }}">
-                  {{ $client->active ? __('Registrations.active_yes') : __('Registrations.active_no') }}
+                <span class="badge {{ $client->do_you_have_experince ? 'bg-success' : 'bg-danger' }}">
+                  {{ $client->do_you_have_experince ? 'Yes' : 'No' }}
+                </span>
+              </td>
+              <td>
+                <span class="badge {{ $client->status == 'complete' ? 'bg-success' : 'bg-warning' }}">
+                  {{ ucfirst($client->status) }}
                 </span>
               </td>
               <td>{{ $client->created_at->format('Y-m-d') }}</td>
-              <td>
-                <a href="{{ route('dashboard.clients.show', $client->id) }}" class="btn btn-sm btn-info">
-                  {{ __('Registrations.show') }}
-                </a>
-              </td>
+             <td>
+  <div class="mb-2">
+    <a href="{{ route('dashboard.clients.show', $client->id) }}" class="btn btn-sm btn-info btn-block">
+      Show
+    </a>
+  </div>
+  @if($client->status === 'pending')
+    <div>
+      <button class="btn btn-sm btn-outline-primary btn-block send-code-btn" data-id="{{ $client->id }}">
+        Send Code
+      </button>
+    </div>
+  @endif
+</td>
+
             </tr>
           @empty
             <tr>
-              <td colspan="9" class="text-center">{{ __('Registrations.no_data') }}</td>
+              <td colspan="10" class="text-center">No data found</td>
             </tr>
           @endforelse
         </tbody>
@@ -167,4 +183,36 @@
 </div>
   </div>
 </div>
+{{-- JS for AJAX Send Code --}}
+<script>
+  document.querySelectorAll('.send-code-btn').forEach(button => {
+    button.addEventListener('click', function () {
+      const clientId = this.dataset.id;
+      this.disabled = true;
+      this.innerText = 'Sending...';
+
+      fetch(`/api/dashboard/clients/${clientId}/send-code`, {
+        method: 'POST',
+        headers: {
+          'X-CSRF-TOKEN': '{{ csrf_token() }}',
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          alert('Verification code sent successfully!');
+        } else {
+          alert('Failed to send code.');
+        }
+      })
+      .catch(() => alert('Error sending code.'))
+      .finally(() => {
+        this.disabled = false;
+        this.innerText = 'Send Code';
+      });
+    });
+  });
+</script>
 @endsection

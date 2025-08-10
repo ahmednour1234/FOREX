@@ -2,36 +2,121 @@
 
 @section('content')
 @php $locale = app()->getLocale(); @endphp
+
 <style>
-    .package-item {
-    box-shadow: 0 5px 15px rgba(128, 128, 128, 0.2); /* ظل رمادي */
-    border-radius: 10px;
-}
-.pricing-modern-primary .pricing-modern-body {
-    border-color: #f3f3f3;
-}
-  @media (max-width: 991.98px) {
-        .breadcrumbs-custom {
-            height: 350px !important; /* صورة أطول في الأجهزة الصغيرة */
-            background-size: cover;
-            background-position: center;
-        }
-
-        .breadcrumbs-custom-title {
-            font-size: 28px;
-            padding-top:150px;
-        }
-    }
-
     .breadcrumbs-custom {
         background-size: cover;
         background-position: center;
     }
+
+    @media (max-width: 991.98px) {
+        .breadcrumbs-custom {
+            height: 350px !important;
+        }
+
+        .breadcrumbs-custom-title {
+            font-size: 28px;
+            padding-top: 150px;
+        }
+    }
+
+    .pricing-card {
+        background: linear-gradient(145deg, #ffffff, #f3f3f3);
+        border-radius: 20px;
+        box-shadow: 0 -15px 30px rgba(0, 0, 0, 0.08);
+        padding: 30px 25px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        transition: all 0.3s ease;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .pricing-card .box {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .pricing-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .pricing-card .plan-name {
+        background: linear-gradient(to right, #cc252e, #000000);
+        color: #fff;
+        font-size: 20px;
+        font-weight: 700;
+        text-align: center;
+        border-radius: 10px;
+        padding: 10px 0;
+        margin-bottom: 20px;
+    }
+
+    .pricing-features {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 25px;
+        text-align: left;
+        font-size: 15px;
+        color: #333;
+    }
+
+    .pricing-features li {
+        margin-bottom: 12px;
+        position: relative;
+        padding-left: 26px;
+    }
+
+    .pricing-features li::before {
+        content: '✔';
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: #cc252e;
+        font-weight: bold;
+    }
+
+    .package-description {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-height: 42px;
+    }
+
+    .btn-primary-custom {
+        background: linear-gradient(to right, #cc252e, #000000);
+        color: #fff;
+        border: none;
+        padding: 14px 30px;
+        border-radius: 50px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: 0.3s all ease-in-out;
+        text-decoration: none;
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+
+    .btn-primary-custom:hover {
+        transform: scale(1.03);
+        opacity: 0.95;
+        color: #fff;
+        background: linear-gradient(to right, #cc252e, #cc252e);
+    }
 </style>
+
 <section class="breadcrumbs-custom bg-image context-dark"
          style="background-image: url({{ asset('web/assets/images/bg-breadcrumbs-01-1894x424.jpg') }});">
     <div class="container">
-     
         <h3 class="breadcrumbs-custom-title">Pricing Table</h3>
     </div>
 </section>
@@ -45,23 +130,20 @@
                     $desc = $locale === 'ar' ? $package->description_ar : $package->description_en;
                     $listItems = array_filter(preg_split("/\r\n|\n|\r/", $desc));
                 @endphp
-<div class="col-sm-6 col-md-4 mb-4" style="box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); border-radius: 10px;">
-                    <div class="pricing-modern {{ $key == 1 ? 'pricing-modern-primary' : '' }}">
-                        <div class="pricing-modern-header">
-                            <p class="pricing-modern-price heading-3">
-                                {{ $locale === 'ar' ? $package->name_ar : $package->name_en }}
-                            </p>
+                <div class="col-sm-6 col-md-4 mb-4 d-flex">
+                    <div class="pricing-card w-100">
+                        <div class="plan-name">
+                            {{ $locale === 'ar' ? $package->name_ar : $package->name_en }}
                         </div>
-                        <div class="pricing-modern-body">
-                            <ul class="pricing-modern-list">
-                                @foreach($listItems as $item)
-                                    <li class="package-description">{{ $item }}</li>
-                                @endforeach
-                            </ul>
-                            <a class="button button-primary" href="{{route('web.becomesponsor')}}" type="button" data-triangle=".button-overlay">
-                                <span style="color:white;">{{ __('Become Sponsor') }}</span>
-                                <span class="button-overlay"></span>
-                            </a>
+                        <div class="box">
+                        <ul class="pricing-features">
+                            @foreach($listItems as $item)
+                                <li class="package-description">{{ $item }}</li>
+                            @endforeach
+                        </ul>
+                        <a class="btn-primary-custom" href="{{ route('web.becomesponsor') }}">
+                            {{ __('Become Sponsor') }}
+                        </a>
                         </div>
                     </div>
                 </div>
@@ -69,17 +151,6 @@
         </div>
     </div>
 </section>
-
-<style>
-    .package-description {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        min-height: 40px;
-    }
-</style>
 
 <script>
     let page = 2;

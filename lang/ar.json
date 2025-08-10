@@ -1346,5 +1346,17 @@
   "pdfs.delete": "حذف",
   "pdfs.confirm_delete": "هل أنت متأكد أنك تريد حذف هذا الملف؟",
   "pdfs.activate": "تفعيل",
-  "pdfs.deactivate": "تعطيل"
+  "pdfs.deactivate": "تعطيل",
+   "luxury_community.title": "أعضاء مجتمع لوكسوري",
+  "luxury_community.create": "إضافة عضو",
+  "luxury_community.name": "الاسم",
+  "luxury_community.title_col": "المسمى الوظيفي",
+  "luxury_community.company": "الشركة",
+  "luxury_community.email": "البريد الإلكتروني",
+  "luxury_community.phone": "رقم الهاتف",
+  "luxury_community.image": "الصورة",
+  "luxury_community.actions": "الإجراءات",
+  "luxury_community.edit": "تعديل",
+  "luxury_community.delete": "حذف",
+  "luxury_community.confirm_delete": "هل أنت متأكد من الحذف؟"
 }

@@ -115,11 +115,11 @@
     <section class="breadcrumbs-custom bg-image context-dark"
         style="background-image: url({{asset('web/assets/images/bg-breadcrumbs-01-1894x424.jpg')}});">
         <div class="container">
-         
+
             <h3 class="breadcrumbs-custom-title">Schdule Event</h3>
         </div>
     </section>
-    
+
     @php
         use Carbon\Carbon;
 
@@ -205,7 +205,7 @@
         by&nbsp;
         @foreach ($schedule->speakers as $index => $speaker)
             <span
-                style="color: #E73701; cursor: pointer;"
+                style="color: #cc252e; cursor: pointer;"
                 onclick="window.location.href='{{ route('web.speaker') }}#speaker-{{ $speaker->id }}'"
             >
                 {{ $speaker->name_en }}
@@ -251,11 +251,11 @@
                             </div>
                         </div>
                     @endforeach
-                  
+
                 </div>
-                
+
             </div>
-            
+
         </div>
     </section>
 

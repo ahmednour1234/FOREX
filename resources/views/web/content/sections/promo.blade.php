@@ -2,10 +2,38 @@
     <section id="home-promo" class="overflow-hidden" style="margin-top: -10px; background: #fff; position: relative;">
         {{-- ✅ العنوان --}}
         <div class="container text-center py-3">
-            <h2 class="promo-title" style="font-size: 60px; font-weight: 900; color: #000; line-height: 1.2; margin-bottom: 10px;">
+            <h2
+                class="promo-title"
+                style="
+                    font-size: 60px;
+                    font-weight: 900;
+                    line-height: 1.2;
+                    margin-bottom: 10px;
+                    background: linear-gradient(270deg, #000000, #E73701, #000000);
+                    background-size: 600% 600%;
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    animation: gradientShift 5s ease infinite;
+                "
+            >
                 {{ $section->title[app()->getLocale()] ?? 'Promo Title' }}
             </h2>
         </div>
+
+        <style>
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        </style>
+
 
         {{-- ✅ نوع الوسائط --}}
         @if ($section->media_type === 'video')
@@ -21,10 +49,8 @@
 
         @elseif($section->media_type === 'link' && $section->thumbnail)
             {{-- ✅ صورة + أيقونة تشغيل --}}
-            <div class="position-relative" style="width: 100%; height: 90vh; cursor: pointer;"
-                 data-bs-toggle="modal" data-bs-target="#videoModal">
-                <img src="{{ asset($section->thumbnail) }}" alt="Video Thumbnail"
-                     style="width: 100%; height: 90vh; object-fit: cover; display: block;">
+            <div class="position-relative video-thumbnail-wrapper" data-bs-toggle="modal" data-bs-target="#videoModal">
+                <img src="{{ asset($section->thumbnail) }}" alt="Video Thumbnail" class="video-thumbnail-img">
                 <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
                     <div style="width: 80px; height: 80px; background: rgba(0,0,0,0.6); border-radius: 50%;
                                 display: flex; align-items: center; justify-content: center;">
@@ -35,6 +61,30 @@
                     </div>
                 </div>
             </div>
+
+            <style>
+                .video-thumbnail-wrapper {
+                    width: 100%;
+                    height: 90vh;
+                    cursor: pointer;
+                }
+
+                .video-thumbnail-img {
+                    width: 100%;
+                    height: 90vh;
+                    object-fit: cover;
+                    display: block;
+                }
+
+                /* Responsive for tablets and mobile */
+                @media (max-width: 768px) {
+                    .video-thumbnail-wrapper,
+                    .video-thumbnail-img {
+                        height: 50vh;
+                    }
+                }
+            </style>
+
 
             {{-- ✅ Modal --}}
             <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">

@@ -4,14 +4,14 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\Client;
-use App\Models\Qrcode as QrcodeModel;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\ClientQrMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use App\Models\Qrcode as QrcodeModel;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ClientQrMail;
 
 class RegisterController extends Controller
 {
@@ -28,30 +28,26 @@ class RegisterController extends Controller
 public function store(Request $request)
 {
     $data = $request->validate([
-'name'          => 'required|string|max:255',
-'email'         => 'required|email',
-'phone'         => 'required|string',
-'job'           => 'required|string|max:255',
-'country_code'  => 'required|string',
-'company_name'  => 'nullable|string',
-'img'           => 'nullable|image',
-'type'          => 'required|in:1,2',
-
+        'name'          => 'required|string|max:255',
+        'email'         => 'required|email',
+        'phone'         => 'required|string',
+        'job'           => 'required|string|max:255',
+        'country_code'  => 'required|string',
+        'company_name'  => 'nullable|string',
+        'img'           => 'nullable|image',
+        'type'          => 'required|in:1,2',
     ]);
 
-    // جلب أحدث نموذج form
     $latestForm = \App\Models\Form::latest('id')->first();
     if (! $latestForm) {
         return redirect()->back()->withErrors(['form_id' => 'لا يوجد نموذج form حالياً.'])->withInput();
     }
 
     $data['form_id'] = $latestForm->id;
-
-    // إنشاء العميل
     $client = Client::create($data);
 
+    // ✅ إذا كان نوع 2: راعي
     if ($data['type'] == 2) {
-        // إرسال SMS
         try {
             $url = "https://app.community-ads.com/SendSMSAPI/api/SMSSender/SendSMS";
             $uuid = \Illuminate\Support\Str::uuid()->toString();
@@ -79,14 +75,12 @@ public function store(Request $request)
                 CURLOPT_URL            => $url,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_POST           => true,
-                CURLOPT_HTTPHEADER     => [
-                    "Content-Type: application/json"
-                ],
+                CURLOPT_HTTPHEADER     => ["Content-Type: application/json"],
                 CURLOPT_POSTFIELDS     => json_encode($postData),
             ]);
 
             $response = curl_exec($ch);
-            $error    = curl_error($ch);
+            $error = curl_error($ch);
             curl_close($ch);
 
             if ($error) {
@@ -98,50 +92,56 @@ public function store(Request $request)
             \Log::error("❌ Exception while sending SMS: " . $e->getMessage());
         }
 
-    } elseif($data['type'] == 1) {
-       try {
-    $shortCode = Str::random(10);
-    $qrUrl = url('/qr/' . $shortCode);
+        // ✅ إرسال إيميل ترحيبي بدون QR
+        try {
+            Mail::to($client->email)->send(new \App\Mail\SponsorWelcomeMail($client));
+        } catch (\Exception $e) {
+            \Log::error("❌ Error while sending sponsor mail: " . $e->getMessage());
+        }
 
-    // تأكد من وجود مجلد public/qrcodes
-    $directory = public_path('qrcodes');
-    if (!file_exists($directory)) {
-        mkdir($directory, 0755, true);
+        // ✅ رسالة شكر خاصة بالرعاة
+        return redirect()->back()->with('success', 'Thank you for submitting your sponsorship request. We will contact you shortly.');
     }
 
-    // اسم الملف الكامل
-    $fileName = 'qr_' . time() . '_' . $client->id . '.png';
-    $filePath = $directory . '/' . $fileName;
-$fileName = 'qr_' . time() . '_' . $client->id . '.png';
-$qrImageUrl = asset('qrcodes/' . $fileName);  // مثال: https://forextraderssummit.iqbrandx.com/qrcodes/qr_1728392139_5.png
+    // ✅ إذا كان النوع 1: زائر - توليد QR وإرسال الإيميل
+    if ($data['type'] == 1) {
+        try {
+            $shortCode = Str::random(10);
+            $qrUrl = url('/qr/' . $shortCode);
 
-    // توليد QR code وحفظه كصورة
-    \QrCode::format('png')->size(300)->generate($qrUrl, $filePath);
+            $directory = public_path('qrcodes');
+            if (!file_exists($directory)) {
+                mkdir($directory, 0755, true);
+            }
 
-    // إرسال الإيميل
-    Mail::to($client->email)->send(new ClientQrMail(
-        $client,
-        $qrUrl,
-       $qrImageUrl
-    ));
-$shortCode = Str::random(10); // مثل: PlIWLB92bO
+            $fileName = 'qr_' . time() . '_' . $client->id . '.png';
+            $filePath = $directory . '/' . $fileName;
+            $qrImageUrl = asset('qrcodes/' . $fileName);
 
-    // حفظ السجل في قاعدة البيانات
-    QrcodeModel::create([
-        'qrcode'      => $fileName,
-        'active'      => 1,
-            'short_code'  => $shortCode, // أضف هذا العمود للمستقبل
-    'email'        => $client->email,
-        'scan'        => 0,
-        'register_id' => $client->id,
-    ]);
-} catch (\Exception $e) {
-    \Log::error("❌ Error while sending email or saving QR: " . $e->getMessage());
-}
+            \QrCode::format('png')->size(300)->generate($qrUrl, $filePath);
 
+            Mail::to($client->email)->send(new ClientQrMail(
+                $client,
+                $qrUrl,
+                $qrImageUrl
+            ));
+
+            QrcodeModel::create([
+                'qrcode'      => $fileName,
+                'active'      => 1,
+                'short_code'  => $shortCode,
+                'email'       => $client->email,
+                'scan'        => 0,
+                'register_id' => $client->id,
+            ]);
+        } catch (\Exception $e) {
+            \Log::error("❌ Error while sending email or saving QR: " . $e->getMessage());
+        }
+
+        return redirect()->back()->with('success', 'You have been registered successfully. We will contact you shortly.');
     }
 
-    return redirect()->back()->with('success', 'تم تسجيلك بنجاح، سنقوم بالتواصل معك قريبًا');
+    return redirect()->back()->with('success', 'Submission completed.');
 }
 
 

@@ -94,7 +94,7 @@
         by&nbsp;
         @foreach ($schedule->speakers as $index => $speaker)
             <span
-                style="color: #E73701; cursor: pointer;"
+                style="color: #cc252e; cursor: pointer;"
                 onclick="window.location.href='{{ route('web.speaker') }}#speaker-{{ $speaker->id }}'"
             >
                 {{ $speaker->name_en }}
@@ -140,7 +140,7 @@
                             </div>
                         </div>
                     @endforeach
-                  
+
                 </div>
                  <div class="text-center">
             <a class="button button-secondary box-with-triangle-right wow fadeScale mt-2"
@@ -150,6 +150,6 @@
             </a>
         </div>
             </div>
-            
+
         </div>
     </section>

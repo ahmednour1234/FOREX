@@ -320,3 +320,7 @@ Route::prefix('dashboard')->middleware(['auth'])->name('dashboard.')->group(func
 });
 
 Route::post('/video-upload-chunk', [HomeSectionController::class, 'uploadChunk'])->name('video.upload.chunk');
+Route::get('/qr-scanner', [QrcodeController::class, 'scanner'])->name('qr.scanner');
+
+// التحقق من الكود بعد المسح
+Route::post('/qr-scan-check', [QrcodeController::class, 'check'])->name('qr.scan.check');

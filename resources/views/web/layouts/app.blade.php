@@ -140,7 +140,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     position: fixed;
     bottom: 0;
     width: 100%;
-background: linear-gradient(to right, #000000, #E73701);
+background: linear-gradient(to right, #000000, #cc252e);
     color: white;
     padding: 15px 0;
     z-index: 9999;
@@ -185,22 +185,22 @@ background: linear-gradient(to right, #000000, #E73701);
 
   .custom-button-white {
     background-color: #ffffff;
-    color: var(--e-global-color-primary, #E73701);
+    color: var(--e-global-color-primary, #cc252e);
   }
 
   .custom-button-white:hover {
-    background-color: var(--e-global-color-primary, #E73701);
+    background-color: var(--e-global-color-primary, #cc252e);
     color: #fff;
   }
 
   .custom-button-red {
-    background-color: var(--e-global-color-primary, #E73701);
+    background-color: var(--e-global-color-primary, #cc252e);
     color: white;
   }
 
   .custom-button-red:hover {
     background-color: #fff;
-    color: var(--e-global-color-primary, #E73701);
+    color: var(--e-global-color-primary, #cc252e);
   }
 
   #whatsapp-float {
@@ -337,9 +337,9 @@ background: linear-gradient(to right, #000000, #E73701);
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
     countdownEl.innerHTML = `
-      <span>${days} {{ __('days') }}</span> 
-      <span>${hours} {{ __('hours') }}</span> 
-      <span>${minutes} {{ __('minutes') }}</span> 
+      <span>${days} {{ __('days') }}</span>
+      <span>${hours} {{ __('hours') }}</span>
+      <span>${minutes} {{ __('minutes') }}</span>
       <span>${seconds} {{ __('seconds') }}</span>
     `;
   }
